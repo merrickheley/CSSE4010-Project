@@ -1,0 +1,1168 @@
+
+<!-- saved from url=(0135)https://learn.uq.edu.au/bbcswebdav/pid-431002-dt-content-rid-1901668_1/courses/CSSE4010S_6360_62950/PracsAndProject/project/project.htm -->
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>CSSE4010\7410 - Project - Simple Communication System </title>
+<style>
+
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif";}
+.auto-style1 {
+	font-family: Helvetica, sans-serif;
+}
+.auto-style2 {
+	text-indent: -18.0pt;
+	line-height: 115%;
+	font-size: 11.0pt;
+	font-family: Calibri, sans-serif;
+	margin-left: 36.0pt;
+	margin-right: 0cm;
+	margin-top: 0cm;
+	margin-bottom: .0001pt;
+}
+.auto-style3 {
+	text-indent: -18.0pt;
+	line-height: 115%;
+	font-size: 11.0pt;
+	font-family: Calibri, sans-serif;
+	margin-left: 36.0pt;
+	margin-right: 0cm;
+	margin-top: 0cm;
+	margin-bottom: 10.0pt;
+}
+.auto-style4 {
+	line-height: 115%;
+	font-size: 11.0pt;
+	font-family: Calibri, sans-serif;
+	margin-left: 36.0pt;
+	margin-right: 0cm;
+	margin-top: 0cm;
+	margin-bottom: 10.0pt;
+}
+.auto-style5 {
+	color: #FF0000;
+	font-weight: bold;
+}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+<style type="text/css"></style></head>
+
+<body bgcolor="white" lang="EN-AU" link="blue" vlink="purple" style="">
+
+<div class="Section1">
+
+<h2 align="center" style="text-align:center"><a name="Contents"></a><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:#0000A0">CSSE4010\7410 - Project</span></h2>
+
+<h2 align="center" style="text-align:center"><span class="auto-style1">Simple 
+Communication System </span>
+<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;">&nbsp;<o:p></o:p></span></h2>
+
+<p class="MsoNormal" align="center" style="text-align:center"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+color:red">(Proper shoes must be worn in the laboratory!)</span><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+<o:p></o:p>
+</span></p>
+	<p class="MsoNormal" align="center" style="text-align:center">
+	<o:p><b><span style="FONT-FAMILY: &#39;Helvetica&#39;,&#39;sans-serif&#39;">Remember the
+	<span class="style1">TTT</span> principle: <span style="COLOR: red">Things 
+	Take Time</span>, especially in the lab, <span class="GramE">BE</span> 
+	PREPARED or you will not make it.</span></b></o:p></p>
+
+<p class="MsoNormal"><i><span style="font-size:10.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;">Updated - 11/09/2013</span></i></p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<h2><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;">Goal<o:p></o:p></span></h2>
+
+<ul type="disc">
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt"><span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Use
+     VHDL for design of small size digital system </span></li>
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt">
+ <span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Learn 
+ about basics of Hamming and Manchester2 encoding</span></li>
+	<li class="auto-style1" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt">Learn how to deal with 
+	asynchronous input signals in a synchronous system </li>
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt"><span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Explore
+     design options, design user friendly interface with limited hardware 
+ resources</span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt"><span class="auto-style1">
+	Minimise the hardware created by ISE - check hardware resources and compare 
+	with your expected RTL design, improve your VHDL to minimise hardware</span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt"><span class="auto-style1">
+	Develop succinct VHDL coding style</span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l4 level1 lfo1;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Develop
+     awareness of how important is testing and what is needed to perform 
+	extensive tests
+     on hardware embedded in FPGA </span></li>
+</ul>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+<h2><span style="font-family: Helvetica,sans-serif">The Design Task</span></h2>
+<p><font face="Arial">&nbsp;<u><b><i>Overall design requirements:</i></b></u></font></p>
+
+<ol start="1" type="1">
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+ <span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">You are 
+ to design a simple serial communication system as depicted in Fig1 below. The 
+ system uses only 16 characters for communication. The characters are 16 hex digits 
+ from 0 to F. A message - string of 64 
+ digits - is stored in&nbsp; the internal memory on FPGA and send to the 
+ receiver when a pushbutton is depressed. The received string is stored then in 
+ the receiver's memory. </span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">It 
+	should be possible to display the original message char by char on the 3 
+	digit dot matrix display by pressing a pushbutton. The received string can 
+	be displayed char by char on the 3 digit dot matrix display by pressing 
+	another pushbutton. </span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">You 
+	have to provide option to see both sent and received characters side by side 
+	on the display to compare them visually. This is necessary e.g. in milestone 
+	2 if you do not communicate with another board but only use resources of 
+	your board. </span></li>
+	<li class="auto-style1" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">It is 
+	up to you to design the details of user interface based on the matrix 
+	displays, switches and pushbuttons but remember it needs to be user 
+	friendly. </span>You need to design decoders for 5x7 matrix LED displays. </li>
+	<li class="auto-style1" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">The message needs to be 
+	encoded with error correcting Hamming code (7,4) which means 4 data bits are 
+	concatenated with 3 parity bits and send as a 7bit encoded word. The 
+	received message needs to be decoded. </li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">The 
+	Hamming encoded message is to be send as Manchester2 coded signal over the 
+	communication channel. The receiver needs to first decode the Manchester2 
+	code to Hamming encoded binary and finally decode to binary for storage and 
+	display.&nbsp; </span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Hamming 
+	coding is based on parity calculation for groups of bits. You can find 
+	plenty of information on the WEB or in textbooks. A good start would be</span><span class="auto-style1">
+	<a href="http://en.wikipedia.org/wiki/Hamming_code">
+	http://en.wikipedia.org/wiki/Hamming_code</a></span>. </li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+	Manchester2 coding is very simple and was presented in lectures. 
+	The Man2 encoded signal should be in frequency range 10kHz to 100kHz. </span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">One of 
+	main difficulties in communication is receiving asynchronous signals. The 
+	Manchester encoded signal from one board needs to be received by another 
+	board. Your receiver needs to oversample the incoming signal and extract the
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+	Manchester pattern. This must be designed carefully since the clocks of 
+	Nexys2 boards are jittery and you cannot rely on stability of the clock.
+	</span></span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">You 
+	work individually on your design and almost the whole design can be tested 
+	on the same board. You will need another board to test robustness of your 
+	receiver. You will need to demonstrate inter-board communication in the 
+	final demo. It is advisable you find a partner to work on that part already 
+	from the beginning of this project.&nbsp; </span></li>
+	<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:18.0pt; width: 791px; height: 480px;"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-no-proof:yes">
+<img border="0" width="714" height="469" id="_x0000_i1035" src="./project_files/proj_fig1.jpg"></span><font face="Arial">&nbsp;&nbsp;&nbsp; 
+	</font></p>
+	</ol>
+<p><font face="Arial"><u><b><i>Project organisation:</i></b></u></font></p>
+
+<ol start="1" type="1">
+ <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt"><span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Project 
+ is individual and assessed individually. You only need a partner for the final demo 
+ to demonstrate inter-board communication and to have access to a second Nexys2 
+ board for testing during development.</span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Project 
+	is divided into stages with milestones deliveries assessed. </span>
+	<ol start="1" type="1">
+		<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt"><span class="auto-style1">
+		Stage 1: </span>
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Develop 
+		the overall design of the system. Design and implement the 
+		top_design.vhdl file where you are to
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+		describe the whole system structure.&nbsp; <br><strong>Initial progress: 17/09/2013, 
+		progress assessed Pass/Fail </strong> </span></span></li>
+		<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Stage 
+		2: Develop and implement Manchester 2 communication. You need to 
+		implement transmitter and receiver with oversampling and demonstrate 
+		working system as schematically shown in Fig2 below. <br><strong>
+		MILESTONE 1: 
+		23/09/2013, progress assessed as 5% of course marks. </strong> </span></li>
+		<li class="auto-style1" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">Stage 3: Develop Hamming 
+		encoding/decoding with H(7,4). You need to implement encoder and decoder 
+		and demonstrate
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">working 
+		system as schematically shown in Fig3 below.<br>
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+		<strong>MILESTONE 2:</strong></span><strong> 08/10/2013, 
+		progress assessed as 5% of course marks</strong>. </span></li>
+		<li class="auto-style1" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">Stage 4: Integrate the 
+		system and demonstrate communication between two Nexys2 boards. <br>
+		<strong>FINAL DEMO: 22/10/2013, </strong>
+		<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+		<strong>progress assessed as 15% of course marks.</strong></span></li>
+	</ol>
+	</li>
+</ol>
+	<p><font face="Arial"><u><b><i>Stage 1: Initial progress </i></b></u></font></p>
+
+<ol start="1" type="1">
+    <li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt"><span class="auto-style1">
+	Fill in the missing signals on the block diagram in Fig1, expand blocks 
+	which need that e.g. user interface or top_controller. Define interactions 
+	between the blocks, required signals and their types.<br>
+	</span></li>
+	<li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt">
+	<span style="font-family:
+     &quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">Develop 
+		the overall design of the system. Design and implement the 
+		top_design.vhdl file where you are to
+		describe the whole system structure (not necessary everything in 
+		structural VHDL). declare the signals used for interaction. Comment heavily - this is your working document for 
+		code development. Design the user interface - make detailed use 
+	scenarios for testing and demos.&nbsp; BE SURE YOUR WORKBOOK REALLY REFLECTS 
+	THE AMOUNT OF WORK YOU PUT IN. <br><strong>Initial progress: 17/09/2013, 
+		progress assessed Pass/Fail </strong></span></li>
+</ol>
+	<p>&nbsp;</p>
+<p><font face="Arial"><u><b><i>Stage 2: MILESTONE 1 </i></b></u></font></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:18.0pt; width: 791px; height: 480px;"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-no-proof:yes">
+<img border="0" width="714" height="469" id="_x0000_i1035" src="./project_files/proj_fig2.jpg"></span><font face="Arial">&nbsp;&nbsp;&nbsp; 
+	</font></p>
+
+	<p class="MsoNormal">
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;">
+	NOTES: </span></p>
+	<p class="MsoNormal"><span class="auto-style1">1. Fill in the missing 
+	signals on the block diagram in Fig2, expand blocks which you develop in 
+	this stage and all others that need it e.g. user 
+	interface or top_controller.
+	</span></p>
+	<p class="MsoNormal">2. <span class="auto-style1">Manchester2 transmitter 
+	receiver can be efficiently implemented using FSMs or shift register based
+	</span>
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;">
+	circuitry. Up to you which way you go but pay attention to the design of 
+	handshaking for fetching a new character to encode and to store a new 
+	decoded character. Remember oversampling for the receiver. </span></p>
+	<p class="MsoNormal">3<span class="auto-style1">. Fig2 above shows fetching 
+	a char to be encoded directly from memory. Remember that in the final design 
+	this will be coming from the Hamming encoder. Design the fetching control 
+	circuitry such that you can reuse it in your Hamming design later. The best 
+	solution is probably to make a dummy H encoder module just fetching from 
+	memory and passing a char to its output register. </span></p>
+	<p class="MsoNormal">
+	4<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;">. 
+	You can develop and perform all the initial tests of Man2 on the same FPGA 
+	running both modules on the same clock to simplify the development. You 
+	oversample when receiving but your clock is the same as in the transmitter. 
+	If that works reliably you then move to<o:p> tests (and possibly 
+	modifications) on two Neys2 boards.</o:p></span></p>
+	<p class="auto-style1">
+	5<o:p>. It is a good idea to check clock jitter on the Nexys2 boards which 
+	you are going to use. You can do it in the lab. Do some calculations on how 
+	high oversampling is needed to avoid problems with jitter. Your required 
+	communication speed is low enough to solve the problem reliably. </o:p>
+	</p>
+	<p class="auto-style1">
+	<o:p></o:p>
+	</p>
+<p><font face="Arial"><u><b><i>Stage 3: MILESTONE 2</i></b></u></font></p>
+
+<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:18.0pt; width: 791px; height: 480px;"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-no-proof:yes">
+<img border="0" width="714" height="469" id="_x0000_i1036" src="./project_files/proj_fig3.jpg"></span><font face="Arial">&nbsp;&nbsp;&nbsp; 
+	</font></p>
+
+	<p class="MsoNormal">
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;">
+	NOTES: </span></p>
+	<p class="MsoNormal"><span class="auto-style1">1. Fill in the missing 
+	signals on the block diagram in Fig3, expand blocks which which you develop 
+	in this stage and all others that need it e.g. user 
+	interface or top_controller.
+	</span></p>
+	<p class="MsoNormal">2. <span class="auto-style1">Make sure you understand 
+	Hamming coding in depth. Choose either the positional or matrix method and 
+	experiment with VHDL to make simple descriptions.The digital ciruitry for 
+	Hamming encoding/decoding can be made very efficiently in VHDL if you 
+	understand what you are doing. E.g. correcting the error is just negating 
+	the bit pointed by the 'syndrome' number.
+	</span></p>
+	<p class="auto-style1">3. Fig3 above shows testing the Hamming system with 
+	'Error insertion' method. Make error insertion module (not necessary a 
+	component) such that you can insert an error (flipped bit) from the slide 
+	switches on Nexys2. Test single bit error insertion on all 7 bits of hamming 
+	encoded char. Test double bit errors - make sure your system responds 
+	consistently.</p>
+	<p class="MsoNormal">4. <span class="auto-style1">Make drivers/decoders for 
+	the dot matrix displays to provide a display such as the one shown in Fig4 
+	below. Use this display to test and demonstrate your Hamming system </span></p>
+	<p class="MsoNormal">&nbsp;</p>
+	<p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+margin-left:18.0pt; width: 791px; height: 480px;"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-no-proof:yes">
+<img border="0" width="714" height="469" id="_x0000_i1036" src="./project_files/proj_fig4.jpg"></span><font face="Arial">&nbsp;&nbsp;&nbsp; 
+	</font></p>
+
+<p><font face="Arial"><u><b><i>Stage 4: FINAL DEMO</i></b></u></font></p>
+
+	<p class="MsoNormal">
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;">
+	NOTES: </span></p>
+	<p class="MsoNormal"><span class="auto-style1">1. Prepare a good, 
+	comprehensive demo and reflect that in your workbook. In at most 10 minutes you need to explain the principles of 
+	operation of blocks in your design and demonstrate working hardware. <span style="COLOR: red"> <b>THIS IS 
+	YOUR SHOW</b> - </span>prepare everything to work smoothly. The tutors will ask only 
+	quick questions and the whole assessment MUST END within 15 minutes. If 
+	things are not working - bad luck, we will not give you more time to fix 
+	them.
+	</span></p>
+	<p class="MsoNormal">2. <span class="auto-style1">Declare clearly what is 
+	working what is not, this will make the process much quicker.&nbsp;
+	</span></p>
+	<p class="auto-style1">3. Detailed requirements and marking criteria are 
+	found below and will be followed as much as possible. But remember if some 
+	silly design solutions are encoutered you will be marked down even if those 
+	were not stated in marking criteria. Awkward user interface is a typical 
+	example.</p>
+	<p class="auto-style1">4. Partially working designs will be strongly down 
+	marked. </p>
+	<p class="MsoNormal">&nbsp;</p>
+	<b>
+	</b><li class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo3;tab-stops:list 36.0pt"><b>
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;"> 
+	<h2>
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;"><font color="#FF0000">WARNING</font><o:p></o:p></span></h2>
+
+<p class="MsoNormal"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;">Plagiarism is unacceptable. You were
+required (course profile of this subject) to read and understand <a href="http://www.itee.uq.edu.au/itee-student-misconduct-including-plagiarism.html">the
+School Statement on Misconduct. </a>&nbsp;Make sure that your VHDL code is the
+product of your work and do not let anybody else 'reuse' your code. </span></p> </span></b>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+	<p class="MsoNormal"><b>
+	<span style="font-size:18.0pt;
+font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-language:EN-AU">Assessment and Marking criteria <o:p></o:p></span>
+	</b></p>
+	<p class="MsoNormal"><b>
+	<span style="font-size:12.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	This project is worth 25% of this course and is marked out of 100 marks.</span></b><span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU"><o:p></o:p></span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	It is impossible to quantify all the aspects of your work in the lab but we 
+	tried to set up some criteria to help you to understand what we are after. 
+	Criteria listed here should be treated as <b>guidelines </b>for the tutors 
+	and students. <b style="mso-bidi-font-weight:normal">You must demonstrate in 
+	depth understanding of the content in the project to receive any marks.<o:p></o:p></b></span></p>
+	<p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Stage1: progress 
+	assessed Pass/Fail<o:p></o:p></span></b></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	WORKBOOK:
+<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l6 level1 lfo1">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Block diagram of the 
+	whole system with blocks and signals named as in the corresponding VHDL code 
+	in top_design.vhdl. <span style="mso-spacerun:yes">&nbsp;&nbsp;</span><br>Drawing must 
+	be neat and writing legible. All signals assigned names indicating their 
+	functionality; lines clearly drawn to show signal direction and number of 
+	bits if needed. Plan your final drawing before you start, we will require 
+	GOOD quality diagram and if you do not deliver you will be asked to redraw 
+	till we are satisfied.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l6 level1 lfo1">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Block diagram of user 
+	interface based on 3 modules of LED dot matrix 7x5 (as in Fig4 above), 8 
+	slide switches and 4 pushbuttons. Nexys2 7 segment displays can also be used 
+	as auxiliary displays but cannot replace dot matrix displays. <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l6 level1 lfo1">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Scenarios of use for 
+	User Interface – these can be presented as sequence of events like in state 
+	diagrams and clearly indicating actions and results. <o:p></o:p></span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l6 level1 lfo1">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">State diagrams for the 
+	Tsmtr_Top controller and Rcevr_Top controller – first shot, these diagrams 
+	can be extended and updated later but MUST be here in STAGE1 to PASS<o:p></o:p></span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	CODE: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level1 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Develop the skeleton of 
+	your top_design.vhdl. It must include placeholders of all the elements of 
+	your block diagram in the workbook (blocks, components, signals, processes, 
+	…). Of course, you can name that file as you see fit.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level1 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">The top of the file must 
+	have a comment header stating :<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level2 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:
+12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:Helvetica;
+mso-fareast-language:EN-AU"><span style="mso-list:Ignore">a.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Title of the 
+	project/design, course name, date<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level2 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:
+12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:Helvetica;
+mso-fareast-language:EN-AU"><span style="mso-list:Ignore">b.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Brief functionality 
+	description<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level2 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:
+12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:Helvetica;
+mso-fareast-language:EN-AU"><span style="mso-list:Ignore">c.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Place for update dates 
+	with brief descriptions<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level1 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Functionality of those 
+	elements must be briefly described in comments. Comment briefly but 
+	systematically, eg each placeholder for process, component or design block 
+	MUST have a comment header, each signal declared must be commented to 
+	indicate functionality. <o:p></o:p></span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l7 level1 lfo2">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">This code will be the 
+	basis for your further development. <b style="mso-bidi-font-weight:normal">
+	Remember: structuring<span style="mso-spacerun:yes">&nbsp; </span>and 
+	commenting your code will weight much in all further assessments, much more 
+	than it did in the pracs.<o:p></o:p></b></span></p>
+	<p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU"><o:p>&nbsp;</o:p></span></b></p>
+	<p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Stage2:<span style="mso-spacerun:yes">&nbsp;
+	</span>MILESTONE1 assessed 5% = 20 marks<o:p></o:p></span></b></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	WORKBOOK:
+<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Block diagram(s) of the 
+	blocks which you developed in Stage2 <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">State diagrams <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">RTL diagrams for Man2Enc 
+	and Man2Dec. These are your hardware designs (with hardware blocks like 
+	regs, muxes, counters) which you expect the ISE synthesizer to produce from 
+	your VHDL code for these blocks.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">RTL diagrams from ISE 
+	for these blocks – print out and glue in (if they are too complicated 
+	something is wrong with your VHDL code). <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Oversampling design and 
+	extraction of binary y signal from the oversampled signal<span style="mso-spacerun:yes">&nbsp;
+	</span><o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Printout of essential 
+	reports from the synthesiser for performance and resource use.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">7.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Testing and demo plan <o:p></o:p>
+	</span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l5 level1 lfo3">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">8.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Comments – where you 
+	went wrong and had to change, what can be improved , etc. <o:p></o:p></span>
+	</p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	CODE: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Top-design.vhdl updated <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Man2Enc and Man2Dec 
+	implemented as separate entities and used as components in top_design.vhdl<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Handshaking between 
+	Manchester modules and modules providing and storing the data <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Oversampling implemented 
+	– use of single clock for sender and receiver is permitted<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Parts of user interface 
+	needed to test and demonstrate (may be you need to provide some internal 
+	signals from FPGA to make a good demo ?) <o:p></o:p></span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l8 level1 lfo4">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">All above 
+	well-structured and code commented<o:p></o:p></span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	DEMO: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l9 level1 lfo5">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Extensive simulations 
+	showing Manchester modules working with oversampling.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l9 level1 lfo5">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Use Logic Analyser to 
+	show Manchester modules working. The Man2 encoded signal must be available 
+	on one output pin of FPGA and received on another input pin. Single clock 
+	permitted. <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l9 level1 lfo5">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Use of dot matrix 
+	display optional but recommended for showing the sent and received 
+	character. <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l9 level1 lfo5">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">You can use just one or 
+	two characters for the demo to make tracing of Manchester workings easier, 
+	but be prepared to enter a new char from slide switches if asked to. You 
+	should be able to do it without recompiling your VHDL design.<o:p></o:p></span></p>
+	<p class="auto-style4" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto;">
+	<span style="font-size:12.0pt;
+font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-language:EN-AU"><o:p>&nbsp;</o:p></span><o:p>&nbsp;</o:p></p>
+	<p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Stage3:<span style="mso-spacerun:yes">&nbsp;
+	</span>MILESTONE2<span style="mso-spacerun:yes">&nbsp; </span>assessed 5% = 
+	20 marks<o:p></o:p></span></b></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	WORKBOOK:
+<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Principle of 
+	Hamming(7,4) coding.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	<span style="mso-spacerun:yes">&nbsp;</span>Block diagram(s) of the blocks which 
+	you developed/redeveloped in Stage3 <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">State diagrams <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">RTL diagrams for 
+	H(7,4)Enc<span style="mso-spacerun:yes">&nbsp; </span>and H(7,4)Dec. These 
+	are your hardware designs (with hardware blocks like regs, muxes, counters) 
+	which you expect the ISE synthesizer to produce from your VHDL code for 
+	these blocks.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">RTL diagrams from ISE 
+	for these blocks – print out and glue in (if they are too complicated 
+	something is wrong with your VHDL code). <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Concept of Block Memory 
+	in xilinx FPGA and how it is used<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">7.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Design of “error 
+	insertion” module <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">8.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Printout of essential 
+	reports from the synthesiser for performance and resource use.<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">9.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Testing and demo plan <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">10.<span style="font:7.0pt &quot;Times New Roman&quot;">
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">CHALLENGE: implement 
+	SECDED Hamming code and devise a way to test it on the dot matrix display <o:p></o:p>
+	</span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l10 level1 lfo6">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">11.<span style="font:7.0pt &quot;Times New Roman&quot;">
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Comments – where you 
+	went wrong and had to change, what can be improved , etc. <o:p></o:p></span>
+	</p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	CODE: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Top-design.vhdl updated <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">H(7,4)Enc<span style="mso-spacerun:yes">&nbsp;
+	</span>and H(7,4)Dec implemented as separate entities and used as components 
+	in top_design.vhdl<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Handshaking between 
+	H(7,4)Enc<span style="mso-spacerun:yes">&nbsp; </span>and H(7,4)Dec and data 
+	source data sink memories implemented <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Error insertion module 
+	implemented .<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Parts of user interface 
+	needed to test and demonstrate with dot matrix display as in Fig4 
+	implemented. <span style="mso-spacerun:yes">&nbsp;</span><o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">All above 
+	well-structured and code commented<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">7.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">CHALLENGE: data source 
+	and data sink implemented as BlockMemory components (check ISE synthesis 
+	manual) and filled with data (can be repetitive test data generated on chip) 
+	when a push button is pressed.<o:p></o:p></span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l1 level1 lfo7">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">8.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">CHALLENGE: implement 
+	SECDED Hamming code and devise a way to test it on the dot matrix display <o:p></o:p>
+	</span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	DEMO: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l3 level1 lfo8">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Extensive simulations 
+	showing H(7,4) modules working with and without inserted errors<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l3 level1 lfo8">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Use the dot matrix 
+	display as in Fig4 to show working of Hamming(7,4) system. <o:p></o:p>
+	</span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l3 level1 lfo8">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Show how the system 
+	works when a single or double errors are inserted from slide switches <o:p></o:p>
+	</span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;
+font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;;
+mso-fareast-language:EN-AU"><o:p>&nbsp;</o:p></span></p>
+	<p class="MsoNormal"><b style="mso-bidi-font-weight:normal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Stage4:
+	<span style="mso-spacerun:yes">&nbsp;</span>FINAL DEMO assessed 15% = 60 marks<o:p></o:p></span></b></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	WORKBOOK:
+<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Block diagram(s) updated 
+	(if needed) and clearly marked what the updates are(various colours) <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">State diagrams updated 
+	(if needed) and clearly marked what the updates are(various colours) <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">RTL diagrams updated (if 
+	needed) and clearly marked what the updates are(various colours) <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Printout of essential 
+	reports from the synthesiser for performance and resource use. for the whole 
+	design <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Testing and demo plan <o:p></o:p>
+	</span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l4 level1 lfo9">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Comments – where you 
+	went wrong and had to change, what can be improved, etc. <o:p></o:p></span>
+	</p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	CODE: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Top-design.vhdl updated 
+	(update dates and substantial changes are logged) all design modules 
+	integrated together <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Full transmission chain 
+	from data source to data sink implemented <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Simulation of the whole 
+	chain developed<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Oversampling implemented 
+	– use of single clock for sender and receiver is permitted for simulation <o:p></o:p>
+	</span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Full user interface 
+	needed to test and demonstrate implemented : e.g. you probably need modules 
+	to read the data to be sent and the data received at much slower clock to 
+	show to the user. Of course, not during the transmission. <o:p></o:p></span>
+	</p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l0 level1 lfo10">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">6.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">All above 
+	well-structured and code commented<o:p></o:p></span></p>
+	<p class="MsoNormal">
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">
+	DEMO: <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l2 level1 lfo11">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">1.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">The whole chain works 
+	reliably with appropriate control from the user interface <o:p></o:p></span>
+	</p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l2 level1 lfo11">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">2.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Transmission errors can 
+	be inserted from switches<o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l2 level1 lfo11">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">3.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Transmission of 
+	Manchester encoded signal is working between Nexys2 boards with 10-100Khz 
+	(can be higher but at your own risk). <o:p></o:p></span></p>
+	<p class="auto-style2" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l2 level1 lfo11">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">4.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">If for whatever reason 
+	you cannot transmit between the boards, oversampling is used successfully 
+	and you can show Man2 signal send and received on pins of FPGA.<o:p></o:p></span></p>
+	<p class="auto-style3" style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: auto; mso-list: l2 level1 lfo11">
+	<!--[if !supportLists]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+Helvetica;mso-fareast-language:EN-AU"><span style="mso-list:Ignore">5.<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;
+	</span></span></span><!--[endif]-->
+	<span style="font-size:12.0pt;font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-fareast-language:EN-AU">Logic Analyser and 
+	Oscilloscope are used to enhance the demo (if needed you can have additional 
+	demo signals on FPGA pins – e.g. from the top controller) .<o:p></o:p></span></p>
+<p class="auto-style5">
+&nbsp;</p>
+	<p>
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;">
+	<span style="font-family:&quot;Arial&quot;,&quot;sans-serif&quot;">
+	<b>
+	<span style="COLOR: red"> Further clarification of the assessment process 
+and marking criteria will be published when/if needed on BB.</span></b></span></span></p>
+	<span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;">
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+
+<div class="MsoNormal" align="center" style="text-align:center"><span style="font-family:&quot;Helvetica&quot;,&quot;sans-serif&quot;;mso-fareast-font-family:&quot;Times New Roman&quot;">
+
+<hr size="2" width="100%" align="center">
+
+</span></div>
+
+</span></li></div>
+
+
+
+
+<img id="hzDownscaled" style="position: absolute; top: -10000px;"><img id="hzDownscaled" style="position: absolute; top: -10000px;"><img id="hzDownscaled" style="position: absolute; top: -10000px;"><img id="hzDownscaled" style="position: absolute; top: -10000px;"><img id="hzDownscaled" style="position: absolute; top: -10000px;"></body></html>
