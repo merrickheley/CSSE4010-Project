@@ -172,9 +172,40 @@ component ssegDriver port (
 --
 -------------------------------------------------------------------------------
 
--- receiver controller
+-------------------------------------------------------------------------------
+-- 
+-- Placeholder for Receiver controller
+--
+-- The transmitter controller will control when data will be received and when 
+-- to display
+--
+-- component Receiver_Controller port (
+--            clk  :            in  std_logic;
+--            rst  :            in  std_logic;
+--            st_Transmit :     in  std_logic;
+--            en_Data :         out std_logic;
+--            en_Enc1 :         out std_logic;
+-- ); end component;
+--
+-------------------------------------------------------------------------------
 
--- ui
+----------------------------------
+-- User Interface
+----------------------------------
+-- Handle any hardware output that is essential for the project
+COMPONENT User_Interface
+PORT(
+            clk :            in  STD_LOGIC;
+            rst :            out STD_LOGIC;
+            Matrix_Source :  in  STD_LOGIC_VECTOR (3 downto 0);
+            Matrix_Sink :    in  STD_LOGIC_VECTOR (3 downto 0);
+            slideSwitches :  out STD_LOGIC_VECTOR (7 downto 0);
+            dispSink :       out STD_LOGIC;
+            dispSource :     out STD_LOGIC;
+            transmit :       out STD_LOGIC
+    );
+END COMPONENT;
+
 
 ----------------------------------
 -- Clock signals
@@ -278,6 +309,19 @@ u1 : ssegDriver port map (
       digit2_p => digit2,
       digit3_p => digit3,
       digit4_p => digit4
+);
+
+-- Instance for the user interface
+-- This handles hardware output that is essential for the project
+Inst_User_Interface: User_Interface PORT MAP(
+    clk => slowClock,
+    rst => masterReset,
+    Matrix_Source => Data_Source,
+    Matrix_Sink => Data_Sink,
+    slideSwitches => Hamming_Error,
+    dispSource => Disp_Source,
+    dispSink => Disp_Sink,
+    transmit => Transmit
 );
 
 LEDs(7 downto 0) <= "00000000";
