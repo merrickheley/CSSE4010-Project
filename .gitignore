@@ -1,5 +1,6 @@
 # Ignore everything
 *.*
+pn_info
 
 # Allow the file containing the prac instructions
 !project.html

@@ -48,23 +48,19 @@ component ssegDriver port (
               digit4_p :        in  std_logic_vector(3 downto 0)
 ); end component;  
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Data source
---
+-- Component for the data source
 -- The data source will store the message and output char by char to out1 
 -- and out2
---
--- component Data_Source port (
---            clk  :            in  std_logic;
---            rst  :            in  std_logic;
---            en   :            in  std_logic;
---            out1 :            out std_logic_vector(3 downto 0);
---            out2 :            out std_logic_vector(3 downto 0);
--- ); end component;
---
--------------------------------------------------------------------------------
-
+COMPONENT Data_Source
+PORT(
+    clk :  IN  std_logic;
+    rst :  IN  std_logic;
+    en :   IN  std_logic;          
+    out1 : OUT std_logic_vector(3 downto 0);
+    out2 : OUT std_logic_vector(3 downto 0)
+    );
+END COMPONENT;
+    
 -------------------------------------------------------------------------------
 -- 
 -- Placeholder for Hamming encoder
@@ -322,6 +318,16 @@ Inst_User_Interface: User_Interface PORT MAP(
     dispSource => Disp_Source,
     dispSink => Disp_Sink,
     transmit => Transmit
+);
+
+-- Instance for the data source
+-- This pushes data to the outputs on clock cycles
+Inst_Data_Source: Data_Source PORT MAP(
+    clk => slowClock,
+    rst => masterReset,
+    en => En_Source,
+    out1 => Raw_Source,
+    out2 => Matrix_Source
 );
 
 LEDs(7 downto 0) <= "00000000";
