@@ -81,21 +81,19 @@ END COMPONENT;
 
 -------------------------------------------------------------------------------
 -- 
--- Placeholder for Manchester encoder
---
+-- Component for Manchester encoder
 -- The manchester encoder will take an input signal, and will output the 
 -- manchester encoded signal. Should take a clock that is 16x faster than
 -- the clock for the input signal.
---
--- component Manchesterr_Encoder port (
---            clk    :          in  std_logic;
---            rst    :          in  std_logic;
---            en     :          in  std_logic;
---            input  :          in  std_logic_vector(7 downto 0);
---            outSig :          out std_logic;
--- ); end component;
---
--------------------------------------------------------------------------------
+COMPONENT Manchester_Encoder
+PORT(
+    clk : IN std_logic;
+    rst : IN std_logic;
+    en : IN std_logic;
+    input : IN std_logic_vector(7 downto 0);          
+    outSig : OUT std_logic
+    );
+END COMPONENT;
 
 -------------------------------------------------------------------------------
 -- 
@@ -328,6 +326,14 @@ Inst_Data_Source: Data_Source PORT MAP(
     en => En_Source,
     out1 => Raw_Source,
     out2 => Matrix_Source
+);
+
+Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
+    clk => slowClock,
+    rst => masterReset,
+    en => En_Manchester_Encoder,
+    input => Encoded_Hamming,
+    outSig => Coded_Output
 );
 
 LEDs(7 downto 0) <= "00000000";
