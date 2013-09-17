@@ -207,7 +207,7 @@ END COMPONENT;
 signal masterReset  : std_logic;                            -- Master reset signal
 signal clockScalers : std_logic_vector (26 downto 0);       -- Counter for the 50mhz clock
 signal slowClock    : std_logic;                            -- Slow clock for reading memory
-signal fastClock    : std_logic;                            -- 16x faster than slowclock, for sending data
+signal fastClock    : std_logic;                            -- 8x faster than slowclock, for sending data
 signal secClock     : std_logic;                            -- Generates a pulse every second
 
 ----------------------------------
