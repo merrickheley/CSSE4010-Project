@@ -45,7 +45,8 @@ ARCHITECTURE behavior OF test_Manchester_Encoder IS
          rst    : IN  std_logic;
          en     : IN  std_logic;
          input  : IN  std_logic_vector(7 downto 0);
-         outSig : OUT  std_logic
+         outSig : OUT  std_logic;
+         outBit : OUT  std_logic_VECTOR(2 downto 0)
         );
     END COMPONENT;
     
@@ -58,6 +59,7 @@ ARCHITECTURE behavior OF test_Manchester_Encoder IS
 
  	--Outputs
    signal outSig : std_logic;
+   signal outBit : std_logic_VECTOR(2 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 50 ns;
@@ -70,7 +72,8 @@ BEGIN
           rst => rst,
           en => en,
           input => input,
-          outSig => outSig
+          outSig => outSig,
+          outBit => outBit
         );
 
    -- Clock process definitions
@@ -90,13 +93,22 @@ BEGIN
       wait for 100 ns;
       
       -- Rising edge should be the start of the clock
-      wait for clk_period/2;
+      --wait for clk_period/2;
       
       rst <= '0';
       en <= '1';
       
+      input <= "00000000";
+      wait for clk_period*16;
+      
+      input <= "11111111";
+      wait for clk_period*16;
+      
+      input <= "10110011";
+      wait for clk_period*16;
+            
       input <= "10101010";
-      wait for clk_period*8;
+      wait for clk_period*16;
       
       en <= '0';
 

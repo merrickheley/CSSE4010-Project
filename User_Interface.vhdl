@@ -38,7 +38,7 @@ end User_Interface;
 architecture Behavioral of User_Interface is
 
 begin
-
+    
 
 end Behavioral;
 

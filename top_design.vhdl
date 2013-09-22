@@ -187,18 +187,18 @@ END COMPONENT;
 -- User Interface
 ----------------------------------
 -- Handle any hardware output that is essential for the project
-COMPONENT User_Interface
-PORT(
-            clk :            in  STD_LOGIC;
-            rst :            out STD_LOGIC;
-            Matrix_Source :  in  STD_LOGIC_VECTOR (3 downto 0);
-            Matrix_Sink :    in  STD_LOGIC_VECTOR (3 downto 0);
-            slideSwitches :  out STD_LOGIC_VECTOR (7 downto 0);
-            dispSink :       out STD_LOGIC;
-            dispSource :     out STD_LOGIC;
-            transmit :       out STD_LOGIC
-    );
-END COMPONENT;
+--COMPONENT User_Interface
+--PORT(
+--            clk :            in  STD_LOGIC;
+--            rst :            out STD_LOGIC;
+--            Matrix_Source :  in  STD_LOGIC_VECTOR (3 downto 0);
+--            Matrix_Sink :    in  STD_LOGIC_VECTOR (3 downto 0);
+--            slideSwitches :  out STD_LOGIC_VECTOR (7 downto 0);
+--            dispSink :       out STD_LOGIC;
+--            dispSource :     out STD_LOGIC;
+--            transmit :       out STD_LOGIC
+--    );
+--END COMPONENT;
 
 
 ----------------------------------
@@ -239,13 +239,7 @@ signal Decoded_Manchester    : std_logic_vector(7 downto 0);-- Output decoded ma
 -- Hamming decoder signals
 ----------------------------------
 signal En_Hamming_Decoder : std_logic;                      -- Enable the hamming decoder
-signal Raw_Sink           : std_logic(3 downto 0);          -- Decoded hamming (raw data)
-
-----------------------------------
--- Data source signals
-----------------------------------
-signal En_Source          : std_logic;                      -- Enable the data source
-signal Matrix_Source      : std_logic_vector(3 downto 0);   -- Output for the matrix display
+signal Raw_Sink           : std_logic_vector(3 downto 0);          -- Decoded hamming (raw data)
 
 ----------------------------------
 -- Data sink signals
@@ -273,7 +267,6 @@ signal digit4 : std_logic_vector(3 downto 0);
 begin
 
 slowClock <= clockScalers(12);
-resetFsm <= masterReset or secClock;
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
@@ -307,16 +300,16 @@ u1 : ssegDriver port map (
 
 -- Instance for the user interface
 -- This handles hardware output that is essential for the project
-Inst_User_Interface: User_Interface PORT MAP(
-    clk => slowClock,
-    rst => masterReset,
-    Matrix_Source => Data_Source,
-    Matrix_Sink => Data_Sink,
-    slideSwitches => Hamming_Error,
-    dispSource => Disp_Source,
-    dispSink => Disp_Sink,
-    transmit => Transmit
-);
+--Inst_User_Interface: User_Interface PORT MAP(
+--    clk => slowClock,
+--    rst => masterReset,
+--    Matrix_Source => Matrix_Source,
+--    Matrix_Sink => Matrix_Sink,
+--    slideSwitches => Hamming_Error,
+--    dispSource => Disp_Source,
+--    dispSink => Disp_Sink,
+--    transmit => Transmit
+--);
 
 -- Instance for the data source
 -- This pushes data to the outputs on clock cycles
@@ -335,6 +328,12 @@ Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
     input => Encoded_Hamming,
     outSig => Coded_Output
 );
+
+Hamming_Error <= slideSwitches;
+masterReset   <= pushButtons(3);
+Disp_Sink     <= pushButtons(2);
+Disk_Source   <= pushButtons(1);
+Transmit      <= pushButtons(0);
 
 LEDs(7 downto 0) <= "00000000";
 logic_analyzer(7 downto 0) <= "00000000";
