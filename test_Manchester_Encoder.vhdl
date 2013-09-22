@@ -53,7 +53,7 @@ ARCHITECTURE behavior OF test_Manchester_Encoder IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal rst : std_logic := '0';
+   signal rst : std_logic := '1';
    signal en : std_logic := '0';
    signal input : std_logic_vector(7 downto 0) := (others => '0');
 
@@ -110,6 +110,13 @@ BEGIN
       input <= "10101010";
       wait for clk_period*16;
       
+      en <= '0';    
+      input <= "00000000";
+      wait for clk_period*8;
+      
+      en <= '1';
+      wait for clk_period*16;
+        
       en <= '0';
 
       wait;
