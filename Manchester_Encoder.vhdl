@@ -53,7 +53,7 @@ begin
             stateTop <= s0;
             stateMid <= A;
             outSig <= '1';
-        -- If the encoder has been disbaled wait until the current clock has 
+        -- If the encoder has been disabled wait until the current clock has 
         -- finished before disabling    
         elsif clk'event and clk = '1' and En = '0' then
             stateTop <= s0;

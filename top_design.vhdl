@@ -68,16 +68,15 @@ END COMPONENT;
 -- The hamming encoder will take a character as input, and will output the 
 -- hamming encoded (with parity bit) signal.
 --
--- component Hamming_Encoder port (
---            clk    :          in  std_logic;
---            rst    :          in  std_logic;
---            en     :          in  std_logic;
---            input  :          in  std_logic_vector(3 downto 0);
---            err    :          in  std_logic_vector(3 downto 0);
---            output :          out std_logic_vector(7 downto 0);
--- ); end component;
---
--------------------------------------------------------------------------------
+component Hamming_Encoder port (
+    clk    :          in  std_logic;
+    rst    :          in  std_logic;
+    en     :          in  std_logic;
+    input  :          in  std_logic_vector(3 downto 0);
+    err    :          in  std_logic_vector(3 downto 0);
+    output :          out std_logic_vector(7 downto 0)
+    ); 
+end component;
 
 -------------------------------------------------------------------------------
 -- 
@@ -207,7 +206,7 @@ END COMPONENT;
 signal masterReset  : std_logic;                            -- Master reset signal
 signal clockScalers : std_logic_vector (26 downto 0);       -- Counter for the 50mhz clock
 signal slowClock    : std_logic;                            -- Slow clock for reading memory
-signal fastClock    : std_logic;                            -- 8x faster than slowclock, for sending data
+signal fastClock    : std_logic;                            -- 16x faster than slowclock, for sending data
 signal secClock     : std_logic;                            -- Generates a pulse every second
 
 ----------------------------------
@@ -267,6 +266,7 @@ signal digit4 : std_logic_vector(3 downto 0);
 begin
 
 slowClock <= clockScalers(12);
+fastClock <= clockScalers(9);
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
@@ -321,8 +321,21 @@ Inst_Data_Source: Data_Source PORT MAP(
     out2 => Matrix_Source
 );
 
-Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
+-- Instance for the hamming encoder
+-- Currently this just duplicates its input for the 'encoded' message
+Inst_Hamming_Encoder: Hamming_Encoder PORT MAP(
     clk => slowClock,
+    rst => masterReset,
+    en => En_Hamming_Encoder,
+    input => Raw_Source,
+    err => Hamming_Error,
+    output => Encoded_Hamming
+);
+
+-- Instance for the manchester encoder
+-- Must be run at 16x the clock speed of the hamming encoder
+Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
+    clk => fastClock,
     rst => masterReset,
     en => En_Manchester_Encoder,
     input => Encoded_Hamming,
