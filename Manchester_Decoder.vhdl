@@ -50,8 +50,9 @@ signal buildingOutput : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 
 -- Stage trackers
 signal buildStage  : STD_LOGIC_VECTOR(2 downto 0) := "000";
-signal buildBit    : STD_LOGIC := '0';
 signal lastHalfBit : STD_LOGIC := '0';
+TYPE STATE_BUILD IS (A, B);
+signal buildBit : STATE_BUILD := B;
 
 -- Bins
 signal lowBin  : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
@@ -80,16 +81,16 @@ begin
             CASE y IS
                 -- Idle stage, wait for input to go low
                 WHEN A =>
-                    dataSamples <= "00000001";
-                    countSamples <= "00000001";
-                    buildingOutput <= "00000000";
-                    buildStage <= "000";
-                    buildBit <= '1';
-                    lastHalfBit <= '0';
+                    dataSamples     <= "00000000";
+                    countSamples    <= "00000001";
+                    buildingOutput  <= "00000000";
+                    buildStage      <= "000";
+                    buildBit        <= B;
+                    lastHalfBit     <= '0';
                     
-                    lowByteBin <= "00000000000";
-                    lowBin <= "00000000";
-                    highBin <= "00000001";
+                    lowByteBin      <= "00000000000";
+                    lowBin          <= "00000000";
+                    highBin         <= "00000001";
 
                     if input = '0' then
                         y <= B;
@@ -104,7 +105,7 @@ begin
                         y <= B;
                     else
                         -- If there was only a single bit it was probably just noise
-                        if dataSamples = "00000001" then
+                        if dataSamples = "00000000" then
                             y <= A;
                         else
                             y <= C;
@@ -112,43 +113,46 @@ begin
                     end if;
                     
                 -- Receive the data
-                WHEN C =>                        
+                WHEN C =>
                     -- If a full clock cycle has been sampled
-                    if (countSamples + '1') = dataSamples then
-                        -- If the first half bit has already been received
-                        if buildBit  = '1' then
+                    if countSamples = dataSamples then
+                        
+                        CASE buildBit IS
+                            -- if we are receiving the first halfbit
+                            -- log the half bit and increment the build bit
+                            WHEN A =>
                             
+                                if lowBin > highBin then
+                                    lastHalfBit <= '0';
+                                else
+                                    lastHalfBit <= '1';
+                                end if;
+                                
+                                buildBit <= B;
+                            
+                            -- If the first half bit has already been received
+                            WHEN B =>
                             -- Add the new bit to the output ass it's being build
-                            if lowBin > highBin then
-                                buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
-                            else
-                                buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
-                            end if;
-                            
-                            -- Reset the build stages and bits
-                            buildBit <= '0';
-                            buildStage <= buildStage + '1';
-                            
-                        -- if we are receiving the first halfbit
-                        else
-                            -- Log the half bit and increment the build bit
-                            if lowBin > highBin then
-                                lastHalfBit <= '0';
-                            else
-                                lastHalfBit <= '1';
-                            end if;
-                            buildBit <= '1';
-                        end if;
+                                if lowBin > highBin then
+                                    buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
+                                else
+                                    buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
+                                end if;
+                                
+                                -- Reset the build stages and bits
+                                buildBit <= A;
+                                buildStage <= buildStage + '1';
+                        END CASE;
                         
                         -- Reset the count samples
                         countSamples <= "00000000";
-                        lowBin <= "00000000";
-                        highBin <= "00000000";
+                        lowBin       <= "00000000";
+                        highBin      <= "00000000";
                         
                     else
                         
                         -- If it's the start of a new data bit, output the old bit and check if the signal is high
-                        if buildStage = "000" and buildBit = '0' then
+                        if buildStage = "000" and buildBit = A then
                             if countSamples = "00000000" then
                                 -- If less than 8 low samples have been received in a single byte, the line is high
                                 -- reset the fsm
@@ -171,12 +175,8 @@ begin
                         
                         countSamples <= countSamples + '1';
                         
-                        -- Add the bit to the bin
-                        if input = '0' then
-                            lowBin <= lowBin + '1';
-                        else
-                            highBin <= highBin + '1';
-                        end if;
+                        lowBin  <= lowBin + not(Input);
+                        highBin <= highBin + Input;
                     end if;
             END CASE;  
         end if;
