@@ -1,30 +1,15 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
 --
--- Create Date:   17:21:55 09/23/2013
--- Design Name:   
--- Module Name:   C:/Users/Merrick/Dropbox/UniCourses/CSSE4010/project/test_Transmitter_Controller.vhdl
--- Project Name:  project
--- Target Device:  
--- Tool versions:  
--- Description:   
+-- Merrick Heley
+-- 2013-09-16 
 -- 
--- VHDL Test Bench Created by ISE for module: Transmitter_Controller
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  

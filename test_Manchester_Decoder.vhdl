@@ -17,48 +17,48 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY test_Manchester_Encoder IS
-END test_Manchester_Encoder;
+ENTITY test_Manchester_Decoder IS
+END test_Manchester_Decoder;
  
-ARCHITECTURE behavior OF test_Manchester_Encoder IS 
+ARCHITECTURE behavior OF test_Manchester_Decoder IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT Manchester_Encoder
+    COMPONENT Manchester_Decoder
     PORT(
-         clk    : IN  std_logic;
-         rst    : IN  std_logic;
-         en     : IN  std_logic;
-         input  : IN  std_logic_vector(7 downto 0);
-         outSig : OUT  std_logic;
-         outBit : OUT  std_logic_VECTOR(2 downto 0)
+         clk : IN  std_logic;
+         rst : IN  std_logic;
+         en : IN  std_logic;
+         input : IN  std_logic;
+         decoded : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal clk : std_logic := '0';
-   signal rst : std_logic := '1';
+   signal rst : std_logic := '0';
    signal en : std_logic := '0';
-   signal input : std_logic_vector(7 downto 0) := (others => '0');
+   signal input : std_logic := '0';
 
  	--Outputs
-   signal outSig : std_logic;
-   signal outBit : std_logic_VECTOR(2 downto 0);
+   signal decoded : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 50 ns;
+   constant clk_period : time := 10 ns;
+   
+   -- Test data
+   signal dataByte : std_logic_vector(7 downto 0);
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: Manchester_Encoder PORT MAP (
+   uut: Manchester_Decoder PORT MAP (
           clk => clk,
           rst => rst,
           en => en,
           input => input,
-          outSig => outSig,
-          outBit => outBit
+          decoded => decoded
         );
 
    -- Clock process definitions
@@ -76,34 +76,41 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
       wait for 100 ns;
-      
-      -- Rising edge should be the start of the clock
-      --wait for clk_period/2;
-      
+      rst <= '1';
+      input <= '1';
+
+      wait for clk_period*10;
       rst <= '0';
       en <= '1';
       
-      input <= "00000000";
-      wait for clk_period*16;
-      
-      input <= "11111111";
-      wait for clk_period*16;
-      
-      input <= "10110011";
-      wait for clk_period*16;
-            
-      input <= "10101010";
-      wait for clk_period*16;
-      
-      en <= '0';    
-      input <= "00000000";
-      wait for clk_period*8;
-      
-      en <= '1';
-      wait for clk_period*16;
-        
-      en <= '0';
+      -- Simulate line noise
+      wait for clk_period*10;
+      input <= '0';
+      wait for clk_period*1;
+      input <= '1';
 
+      dataByte <= "00000000";
+      -- Send start byte
+      for I in 0 to 7 loop
+          wait for clk_period*10;
+          input <= dataByte(I);
+          wait for clk_period*10;
+          input <= not(dataByte(I));
+      end loop;
+      
+      dataByte <= "10110010";
+      -- Send start byte
+      for I in 0 to 7 loop
+          wait for clk_period*10;
+          input <= dataByte(I);
+          wait for clk_period*10;
+          input <= not(dataByte(I));
+      end loop;
+      dataByte <= "00000000";
+    
+        
+      wait for clk_period*10;
+      input <= '1';
       wait;
    end process;
 
