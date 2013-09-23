@@ -34,7 +34,7 @@ end Manchester_Decoder;
 
 architecture Behavioral of Manchester_Decoder is
  
--- Idle, sampling clock, waiting, recieving.
+-- Idle, sampling clock, recieving.
 TYPE STATE_TOP IS (A, B, C, D);
 SIGNAL y   : STATE_TOP;
 
@@ -48,8 +48,8 @@ signal countSamples : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 signal buildingOutput : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 
 -- Stage trackers
-signal buildStage : STD_LOGIC_VECTOR(2 downto 0) := "000";
-signal buildBit : STD_LOGIC := '0';
+signal buildStage  : STD_LOGIC_VECTOR(2 downto 0) := "000";
+signal buildBit    : STD_LOGIC := '0';
 signal lastHalfBit : STD_LOGIC := '0';
 
 -- Bins
@@ -67,16 +67,17 @@ begin
         
         -- On reset set the controller back to initial state
         if rst = '1' then
-            decoded <= "00000000";
+            outputReg <= "00000000";
             y <= A;
         
         -- This does not currently work and will simply duplicate the data
         elsif clk'event and clk = '1' then
             if en = '0' then
-                decoded <= "00000000";
+                outputReg <= "00000000";
             else
-                decoded <= "00000" & buildStage;
+                --outputReg <= buildingOutput;
                 CASE y IS
+                    -- Idle stage, wait for input to go low
                     WHEN A =>
                         dataSamples <= "00000001";
                         countSamples <= "00000000";
@@ -85,6 +86,7 @@ begin
                         else 
                             y <= A;
                         end if;
+                    -- Get the #clk's in a sample
                     WHEN B =>
                         if input = '0' then
                             dataSamples <= dataSamples + '1';
@@ -105,8 +107,10 @@ begin
                                 y <= C;
                             end if;
                         end if;
-                    WHEN C =>                        
                         
+                    -- Receive the data
+                    WHEN C =>                        
+                        --decoded <= "00000" & buildStage;
                         -- If a full clock cycle has been sampled
                         if (countSamples + '1') = dataSamples then
                             -- If the first half bit has already been received
@@ -122,7 +126,7 @@ begin
                                 buildStage <= buildStage + '1';
                                 
                             -- if we are recieving the first halfbit
-                            else
+                            else                            
                                 if lowBin > highBin then
                                     lastHalfBit <= '0';
                                 else
@@ -136,6 +140,14 @@ begin
                             highBin <= "00000000";
                             
                         else
+                            if buildStage = "000" and countSamples = "00000000" then
+                                outputReg <= buildingOutput;
+                                
+                                if countSamples > (dataSamples(5 downto 0) & "00") then
+                                    y <= A;
+                                end if;
+                            end if;
+                            
                             countSamples <= countSamples + '1';
                             
                             if input = '0' then
@@ -144,15 +156,12 @@ begin
                                 highBin <= highBin + '1';
                             end if;
                         end if;
-                        
-                        y <= C;
-                        
-                    WHEN D =>
-                        y <= D;
                 END CASE;
             end if;      
         end if;
     END PROCESS;
+    
+    decoded <= outputReg;
 
 end Behavioral;
 
