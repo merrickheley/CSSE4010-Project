@@ -189,4 +189,3 @@ begin
     decoded <= outputReg;
 
 end Behavioral;
-

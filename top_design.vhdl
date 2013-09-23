@@ -92,22 +92,19 @@ PORT(
     );
 END COMPONENT;
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Manchester decoder
---
+-- Component for Manchester decoder
 -- The manchester decoder will take an input signal, and will output the 
 -- signal 8 bits at a time. Should take a clock that is significantly 
 -- faster than the expected clock for the source
---
--- component Manchester_Decoder port (
---            clk     :          in  std_logic;
---            rst     :          in  std_logic;
---            en      :          in  std_logic;
---            input   :          in  std_logic;
---            decoded :          out std_logic_vector(7 downto 0);
--- ); end component;
---
+component Manchester_Decoder port (
+           clk     :          in  std_logic;
+           rst     :          in  std_logic;
+           en      :          in  std_logic;
+           input   :          in  std_logic;
+           decode_valid :     out std_logic;
+           decoded :          out std_logic_vector(7 downto 0)
+); end component;
+
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
@@ -122,7 +119,7 @@ END COMPONENT;
 --            rst     :          in  std_logic;
 --            en      :          in  std_logic;
 --            input   :          in  std_logic_vector(7 downto 0;
---            decoded :          out std_logic_vector(3 downto 0);
+--            decoded :          out std_logic_vector(3 downto 0)
 -- ); end component;
 --
 -------------------------------------------------------------------------------
@@ -139,7 +136,7 @@ END COMPONENT;
 --            rst   :            in  std_logic;
 --            en    :            in  std_logic;
 --            input :            in  std_logic_vector(3 downto 0);
---            out1  :            out std_logic_vector(3 downto 0);
+--            out1  :            out std_logic_vector(3 downto 0)
 -- ); end component;
 --
 -------------------------------------------------------------------------------
@@ -199,6 +196,7 @@ signal masterReset  : std_logic;                            -- Master reset sign
 signal clockScalers : std_logic_vector (26 downto 0);       -- Counter for the 50mhz clock
 signal slowClock    : std_logic;                            -- Slow clock for reading memory
 signal fastClock    : std_logic;                            -- 16x faster than slowclock, for sending data
+signal sampleClock  : std_logic;                            -- Significantly faster than all other clocks
 signal secClock     : std_logic;                            -- Generates a pulse every second
 
 ----------------------------------
@@ -223,6 +221,7 @@ signal Coded_Output          : std_logic;                   -- Coded output of t
 ----------------------------------
 -- Manchester decoder signals
 ----------------------------------
+signal Coded_Input           : std_logic;                   -- Coded output of a manchester decoder
 signal En_Manchester_Decoder : std_logic;                   -- Enable the manchester decoder
 signal Decoded_Manchester    : std_logic_vector(7 downto 0);-- Output decoded manchester (encoded hamming)
 
@@ -258,12 +257,14 @@ signal digit4 : std_logic_vector(3 downto 0);
 begin
 
 -- Use these for implementation
-slowClock <= clockScalers(16);
-fastClock <= clockScalers(12);
+slowClock  <= clockScalers(16);
+fastClock  <= clockScalers(12);
+sampleClock <= clockScalers(7);
 
 -- Use these for simulation
 --slowClock <= clockScalers(5);
 --fastClock <= clockScalers(1);
+
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
@@ -349,6 +350,20 @@ Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
     outSig => Coded_Output
 );
 
+En_Manchester_Decoder <= '1';
+Coded_Input <= slideSwitches(0);
+
+-- Instance for the manchester decoder
+-- Must be run at a significantly faster clock than the manchester encoder
+Inst_Manchester_Decoder: Manchester_Decoder PORT MAP(
+    clk => sampleClock,
+    rst => masterReset,
+    en => En_Manchester_Decoder,
+    input => Coded_Input,
+    decode_valid => En_Hamming_Decoder,
+    decoded => Decoded_Manchester
+);
+
 Hamming_Error <= slideSwitches;
 masterReset   <= pushButtons(3);
 Disp_Sink     <= pushButtons(2);
@@ -357,11 +372,12 @@ Transmit      <= pushButtons(0);
 
 LEDs(7) <= En_Source;
 LEDs(6) <= slowClock;
-LEDs(5) <= '0';
+LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
 
-logic_analyzer(7 downto 1) <= "0000000";
-logic_analyzer(0) <= Coded_Output;
+--logic_analyzer(7 downto 1) <= "0000000";
+--logic_analyzer(0) <= Coded_Output;
+logic_analyzer <= Decoded_Manchester;
 		 
 end Behavioral;
