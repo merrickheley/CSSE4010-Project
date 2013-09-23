@@ -116,7 +116,7 @@ begin
             index <= "000000";
         elsif clk'event and clk = '1' and en = '1' then
             input_var := conv_integer (index);
-            out1 <= ram(input_var);
+            out1 <= RAM(input_var);
             index <= index + '1';
         end if;
 

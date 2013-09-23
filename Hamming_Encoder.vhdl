@@ -40,8 +40,6 @@ end Hamming_Encoder;
 
 architecture Behavioral of Hamming_Encoder is
     
-    SIGNAL reg : STD_LOGIC_VECTOR(3 downto 0);
-    
 begin
 
 
@@ -52,13 +50,14 @@ begin
         -- On reset set the controller back to initial state
         if rst = '1' then
             output <= "00000000";
-            
-        elsif en = '1' then
-            output <= "00000000";
         
         -- This does not currently work and will simply duplicate the data
-        elsif clk'event and clk = '1' and en = '1' then
-            output <= input & input;            
+        elsif clk'event and clk = '1' then
+            if en = '0' then
+                output <= "00000000";
+            else
+                output <= input & input;  
+            end if;      
         end if;
     END PROCESS;
     

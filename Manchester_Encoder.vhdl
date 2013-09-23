@@ -53,115 +53,118 @@ begin
             stateTop <= s0;
             stateMid <= A;
             outSig <= '1';
-        -- If the encoder has been disabled wait until the current clock has 
-        -- finished before disabling    
-        elsif clk'event and clk = '1' and En = '0' then
-            stateTop <= s0;
-            stateMid <= A;
-            outSig <= '1';
-            --outBit <= "000";
-        -- On clock edges move between the states in the state machine
-        -- stateTop tracks the bit being used for the transmission
-        -- stateMid tracks whether the bit is inverted or not
-        elsif clk'event and clk = '1' and En = '1' then
-            CASE stateTop IS
-                WHEN s0 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(0);
-                            stateMid <= B;
-                            stateTop <= s0;
-                        WHEN B =>
-                            outSig <= NOT(input(0));
-                            stateMid <= A;
-                            stateTop <= s1;
-                    END CASE;
-                    --outBit <= "000";
-                WHEN s1 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(1);
-                            stateMid <= B;
-                            stateTop <= s1;
-                        WHEN B =>
-                            outSig <= NOT(input(1));
-                            stateMid <= A;
-                            stateTop <= s2;
-                    END CASE;
-                    --outBit <= "001";
-                WHEN s2 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(2);
-                            stateMid <= B;
-                            stateTop <= s2;
-                        WHEN B =>
-                            outSig <= NOT(input(2));
-                            stateMid <= A;
-                            stateTop <= s3;
-                    END CASE;
-                    --outBit <= "010";
-                WHEN s3 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(3);
-                            stateMid <= B;
-                            stateTop <= s3;
-                        WHEN B =>
-                            outSig <= NOT(input(3));
-                            stateMid <= A;
-                            stateTop <= s4;
-                    END CASE;
-                    --outBit <= "011";
-                WHEN s4 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(4);
-                            stateMid <= B;
-                            stateTop <= s4;
-                        WHEN B =>
-                            outSig <= NOT(input(4));
-                            stateMid <= A;
-                            stateTop <= s5;
-                    END CASE;
-                    --outBit <= "100";
-                WHEN s5 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(5);
-                            stateMid <= B;
-                            stateTop <= s5;
-                        WHEN B =>
-                            outSig <= NOT(input(5));
-                            stateMid <= A;
-                            stateTop <= s6;
-                    END CASE; 
-                    --outBit <= "101";                    
-                WHEN s6 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(6);
-                            stateMid <= B;
-                            stateTop <= s6;
-                        WHEN B =>
-                            outSig <= NOT(input(6));
-                            stateMid <= A;
-                            stateTop <= s7;
-                    END CASE;
-                    --outBit <= "110";                    
-                WHEN s7 =>
-                    CASE stateMid IS
-                        WHEN A =>
-                            outSig <= input(7);
-                            stateMid <= B;
-                            stateTop <= s7;
-                        WHEN B =>
-                            outSig <= NOT(input(7));
-                            stateMid <= A;
-                            stateTop <= s0;
-                    END CASE;
-                    --outBit <= "111";
-            END CASE;
+        elsif clk'event and clk = '1' then
+            -- If the encoder has been disabled wait until the current clock has 
+            -- finished before disabling  
+            if en = '0' then
+                stateTop <= s0;
+                stateMid <= A;
+                outSig <= '1';
+                --outBit <= "000";
+            -- On clock edges move between the states in the state machine
+            -- stateTop tracks the bit being used for the transmission
+            -- stateMid tracks whether the bit is inverted or not
+            else
+
+                CASE stateTop IS
+                    WHEN s0 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(0);
+                                stateMid <= B;
+                                stateTop <= s0;
+                            WHEN B =>
+                                outSig <= NOT(input(0));
+                                stateMid <= A;
+                                stateTop <= s1;
+                        END CASE;
+                        --outBit <= "000";
+                    WHEN s1 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(1);
+                                stateMid <= B;
+                                stateTop <= s1;
+                            WHEN B =>
+                                outSig <= NOT(input(1));
+                                stateMid <= A;
+                                stateTop <= s2;
+                        END CASE;
+                        --outBit <= "001";
+                    WHEN s2 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(2);
+                                stateMid <= B;
+                                stateTop <= s2;
+                            WHEN B =>
+                                outSig <= NOT(input(2));
+                                stateMid <= A;
+                                stateTop <= s3;
+                        END CASE;
+                        --outBit <= "010";
+                    WHEN s3 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(3);
+                                stateMid <= B;
+                                stateTop <= s3;
+                            WHEN B =>
+                                outSig <= NOT(input(3));
+                                stateMid <= A;
+                                stateTop <= s4;
+                        END CASE;
+                        --outBit <= "011";
+                    WHEN s4 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(4);
+                                stateMid <= B;
+                                stateTop <= s4;
+                            WHEN B =>
+                                outSig <= NOT(input(4));
+                                stateMid <= A;
+                                stateTop <= s5;
+                        END CASE;
+                        --outBit <= "100";
+                    WHEN s5 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(5);
+                                stateMid <= B;
+                                stateTop <= s5;
+                            WHEN B =>
+                                outSig <= NOT(input(5));
+                                stateMid <= A;
+                                stateTop <= s6;
+                        END CASE; 
+                        --outBit <= "101";                    
+                    WHEN s6 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(6);
+                                stateMid <= B;
+                                stateTop <= s6;
+                            WHEN B =>
+                                outSig <= NOT(input(6));
+                                stateMid <= A;
+                                stateTop <= s7;
+                        END CASE;
+                        --outBit <= "110";                    
+                    WHEN s7 =>
+                        CASE stateMid IS
+                            WHEN A =>
+                                outSig <= input(7);
+                                stateMid <= B;
+                                stateTop <= s7;
+                            WHEN B =>
+                                outSig <= NOT(input(7));
+                                stateMid <= A;
+                                stateTop <= s0;
+                        END CASE;
+                        --outBit <= "111";
+                END CASE;
+            end if;
         end if;
     END PROCESS;
 
