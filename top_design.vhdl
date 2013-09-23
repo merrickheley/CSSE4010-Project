@@ -61,13 +61,9 @@ PORT(
     );
 END COMPONENT;
     
--------------------------------------------------------------------------------
--- 
--- Placeholder for Hamming encoder
---
+-- Component for the hamming encoding
 -- The hamming encoder will take a character as input, and will output the 
 -- hamming encoded (with parity bit) signal.
---
 component Hamming_Encoder port (
     clk    :          in  std_logic;
     rst    :          in  std_logic;
@@ -78,8 +74,6 @@ component Hamming_Encoder port (
     ); 
 end component;
 
--------------------------------------------------------------------------------
--- 
 -- Component for Manchester encoder
 -- The manchester encoder will take an input signal, and will output the 
 -- manchester encoded signal. Should take a clock that is 16x faster than
@@ -146,24 +140,18 @@ END COMPONENT;
 --
 -------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Transmitter controller
---
+-- Component for Transmitter controller
 -- The transmitter controller will control when data will be sent and the
 -- various encoders
---
--- component Transmitter_Controller port (
---            clk  :            in  std_logic;
---            rst  :            in  std_logic;
---            st_Transmit :     in  std_logic;
---            st_Disp :         in  std_logic;
---            en_Data :         out std_logic;
---            en_Enc1 :         out std_logic;
---            en_Enc2 :         out std_logic;
--- ); end component;
---
--------------------------------------------------------------------------------
+component Transmitter_Controller port (
+           clk  :            in  std_logic;
+           rst  :            in  std_logic;
+           st_Transmit :     in  std_logic;
+           st_Disp :         in  std_logic;
+           en_Data :         out std_logic;
+           en_Enc1 :         out std_logic;
+           en_Enc2 :         out std_logic
+); end component;
 
 -------------------------------------------------------------------------------
 -- 
@@ -311,6 +299,16 @@ u1 : ssegDriver port map (
 --    transmit => Transmit
 --);
 
+Inst_Transmitter_Controller: Transmitter_Controller PORT MAP(
+    clk => slowClock,
+    rst => masterReset,
+    st_Transmit => Transmit,
+    st_Disp => Disp_Source,
+    en_Data => En_Source,
+    en_Enc => En_Hamming_Encoder,
+    en_Enc2 => En_Manchester_Encoder
+);
+
 -- Instance for the data source
 -- This pushes data to the outputs on clock cycles
 Inst_Data_Source: Data_Source PORT MAP(
@@ -348,7 +346,7 @@ Disp_Sink     <= pushButtons(2);
 Disk_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
-LEDs(7 downto 0) <= "00000000";
+LEDs(7 downto 0) <= "0000000" & Coded_Output;
 logic_analyzer(7 downto 0) <= "00000000";
 		 
 end Behavioral;
