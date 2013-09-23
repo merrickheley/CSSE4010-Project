@@ -74,8 +74,7 @@ begin
             outputReg <= "00000000";
             decode_valid <= '0';
             y <= A;
-        
-        -- This does not currently work and will simply duplicate the data
+
         elsif clk'event and clk = '1' then
             if en = '0' then
                 outputReg <= "00000000";
@@ -133,7 +132,7 @@ begin
                                 buildBit <= '0';
                                 buildStage <= buildStage + '1';
                                 
-                            -- if we are recieving the first halfbit
+                            -- if we are receiving the first halfbit
                             else
                                 -- Log the half bit and increment the build bit
                                 if lowBin > highBin then
