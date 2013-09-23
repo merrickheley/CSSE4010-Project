@@ -75,113 +75,110 @@ begin
             decode_valid <= '0';
             y <= A;
 
-        elsif clk'event and clk = '1' then
-            if en = '0' then
-                outputReg <= "00000000";
-            else
-                --outputReg <= buildingOutput;
-                CASE y IS
-                    -- Idle stage, wait for input to go low
-                    WHEN A =>
-                        dataSamples <= "00000001";
-                        countSamples <= "00000000";
-                        if input = '0' then
-                            y <= B;
-                        else 
+        elsif clk'event and clk = '1' and en = '1' then
+            --outputReg <= buildingOutput;
+            CASE y IS
+                -- Idle stage, wait for input to go low
+                WHEN A =>
+                    dataSamples <= "00000001";
+                    countSamples <= "00000001";
+                    buildingOutput <= "00000000";
+                    buildStage <= "000";
+                    buildBit <= '1';
+                    lastHalfBit <= '0';
+                    
+                    lowByteBin <= "00000000000";
+                    lowBin <= "00000000";
+                    highBin <= "00000001";
+
+                    if input = '0' then
+                        y <= B;
+                    else 
+                        y <= A;
+                    end if;
+                -- Get the #clk's in a sample
+                WHEN B =>
+                    -- Count the number of clock cycles input is low for
+                    if input = '0' then
+                        dataSamples <= dataSamples + '1';
+                        y <= B;
+                    else
+                        -- If there was only a single bit it was probably just noise
+                        if dataSamples = "00000001" then
                             y <= A;
-                        end if;
-                    -- Get the #clk's in a sample
-                    WHEN B =>
-                        if input = '0' then
-                            dataSamples <= dataSamples + '1';
-                            y <= B;
                         else
-                            -- If there was only a single bit it was probably just noise
-                            if dataSamples = "00000001" then
-                                y <= A;
+                            y <= C;
+                        end if;
+                    end if;
+                    
+                -- Receive the data
+                WHEN C =>                        
+                    -- If a full clock cycle has been sampled
+                    if (countSamples + '1') = dataSamples then
+                        -- If the first half bit has already been received
+                        if buildBit  = '1' then
+                            
+                            -- Add the new bit to the output ass it's being build
+                            if lowBin > highBin then
+                                buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
                             else
-                                countSamples <= "00000001";
-                                buildingOutput <= "00000000";
-                                buildStage <= "000";
-                                buildBit <= '1';
-                                lastHalfBit <= '0';
-                                
-                                lowByteBin <= "00000000000";
-                                lowBin <= "00000000";
-                                highBin <= "00000001";
-                                y <= C;
+                                buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
                             end if;
+                            
+                            -- Reset the build stages and bits
+                            buildBit <= '0';
+                            buildStage <= buildStage + '1';
+                            
+                        -- if we are receiving the first halfbit
+                        else
+                            -- Log the half bit and increment the build bit
+                            if lowBin > highBin then
+                                lastHalfBit <= '0';
+                            else
+                                lastHalfBit <= '1';
+                            end if;
+                            buildBit <= '1';
                         end if;
                         
-                    -- Receive the data
-                    WHEN C =>                        
-                        --decoded <= "00000" & buildStage;
-                        -- If a full clock cycle has been sampled
-                        if (countSamples + '1') = dataSamples then
-                            -- If the first half bit has already been received
-                            if buildBit  = '1' then
-                                
-                                -- Add the new bit to the output ass it's being build
-                                if lowBin > highBin then
-                                    buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
+                        -- Reset the count samples
+                        countSamples <= "00000000";
+                        lowBin <= "00000000";
+                        highBin <= "00000000";
+                        
+                    else
+                        
+                        -- If it's the start of a new data bit, output the old bit and check if the signal is high
+                        if buildStage = "000" and buildBit = '0' then
+                            if countSamples = "00000000" then
+                                -- If less than 8 low samples have been received in a single byte, the line is high
+                                -- reset the fsm
+                                if lowByteBin < "00000001000" then
+                                    outputReg <= "00000000";
+                                    y <= A;
+                                -- Data is valid, output the data and indicate validity
                                 else
-                                    buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
+                                    outputReg <= buildingOutput;
+                                    decode_valid <= '1';
+                                    lowByteBin <= "00000000000";
                                 end if;
-                                
-                                -- Reset the build stages and bits
-                                buildBit <= '0';
-                                buildStage <= buildStage + '1';
-                                
-                            -- if we are receiving the first halfbit
+                            -- Decode should not be valid at all other times
                             else
-                                -- Log the half bit and increment the build bit
-                                if lowBin > highBin then
-                                    lastHalfBit <= '0';
-                                else
-                                    lastHalfBit <= '1';
-                                end if;
-                                buildBit <= '1';
+                                decode_valid <= '0';
                             end if;
-                            
-                            -- Reset the count samples
-                            countSamples <= "00000000";
-                            lowBin <= "00000000";
-                            highBin <= "00000000";
-                            
-                        else
-                            
-                            -- If it's the start of a new data bit, output the old bit and check if the signal is high
-                            if buildStage = "000" and buildBit = '0' then
-                                if countSamples = "00000000" then
-                                    -- If less than 8 low samples have been received in a single byte, the line is high
-                                    -- reset the fsm
-                                    if lowByteBin < "00000001000" then
-                                        outputReg <= "00000000";
-                                        y <= A;
-                                    -- Data is valid, output the data and indicate validity
-                                    else
-                                        outputReg <= buildingOutput;
-                                        decode_valid <= '1';
-                                        lowByteBin <= "00000000000";
-                                    end if;
-                                else
-                                    decode_valid <= '0';
-                                end if;
-                            elsif input = '0' then
-                                lowByteBin <= lowByteBin + '1';
-                            end if;
-                            
-                            countSamples <= countSamples + '1';
-                            
-                            -- Add the bit to the bin
-                            if input = '0' then
-                                lowBin <= lowBin + '1';
-                            else
-                                highBin <= highBin + '1';
-                            end if;
+                        elsif input = '0' then
+                            lowByteBin <= lowByteBin + '1';
                         end if;
-                END CASE;
-            end if;      
+                        
+                        countSamples <= countSamples + '1';
+                        
+                        -- Add the bit to the bin
+                        if input = '0' then
+                            lowBin <= lowBin + '1';
+                        else
+                            highBin <= highBin + '1';
+                        end if;
+                    end if;
+            END CASE;  
         end if;
     END PROCESS;
     
