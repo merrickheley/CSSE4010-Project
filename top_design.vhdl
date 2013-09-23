@@ -16,6 +16,10 @@
 -- Question: Do we have to be able to display source and sink data simultaneously?
 -- Question: Do we have to be able to display the message and send the data simultaneously?
 --
+--     Milestone 2: 2013-09-17
+--
+-- Added data source, shell for hamming encoder and decoder, and manchester encoder and decoder.
+--
 -------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -253,8 +257,13 @@ signal digit4 : std_logic_vector(3 downto 0);
 
 begin
 
+-- Use these for implementation
 slowClock <= clockScalers(16);
 fastClock <= clockScalers(12);
+
+-- Use these for simulation
+--slowClock <= clockScalers(5);
+--fastClock <= clockScalers(1);
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
@@ -346,7 +355,13 @@ Disp_Sink     <= pushButtons(2);
 Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
-LEDs(7 downto 0) <= "0000000" & Coded_Output;
-logic_analyzer(7 downto 0) <= "00000000";
+LEDs(7) <= En_Source;
+LEDs(6) <= slowClock;
+LEDs(5) <= '0';
+LEDS(4 downto 1) <= Raw_Source;
+LEDs(0) <= Coded_Output;
+
+logic_analyzer(7 downto 1) <= "0000000";
+logic_analyzer(0) <= Coded_Output;
 		 
 end Behavioral;

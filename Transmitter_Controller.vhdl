@@ -1,22 +1,15 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
+--
+-- Merrick Heley
+-- 2013-09-16 
 -- 
--- Create Date:    16:42:23 09/23/2013 
--- Design Name: 
--- Module Name:    Transmitter_Controller - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;

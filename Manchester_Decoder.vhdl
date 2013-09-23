@@ -22,38 +22,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Hamming_Encoder is
+entity Manchester_Decoder is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
-           input : in  STD_LOGIC_VECTOR (3 downto 0);
-           err : in  STD_LOGIC_VECTOR (7 downto 0);
-           output : out  STD_LOGIC_VECTOR (7 downto 0));
-end Hamming_Encoder;
+           input : in  STD_LOGIC;
+           decoded : out  STD_LOGIC_VECTOR (7 downto 0));
+end Manchester_Decoder;
 
-architecture Behavioral of Hamming_Encoder is
-    
+architecture Behavioral of Manchester_Decoder is
+
 begin
 
-
-    -- Process for reading data out of the data source when enable is on
-    PROCESS (clk, en, rst)
-    BEGIN
-        
-        -- On reset set the controller back to initial state
-        if rst = '1' then
-            output <= "00000000";
-        
-        -- This does not currently work and will simply duplicate the data
-        elsif clk'event and clk = '1' then
-            if en = '0' then
-                output <= "00000000";
-            else
-                output <= input & input;  
-            end if;      
-        end if;
-    END PROCESS;
-    
 
 
 end Behavioral;
