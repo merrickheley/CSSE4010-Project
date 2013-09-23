@@ -108,7 +108,7 @@ signal RAM : RAM_TYPE :=    (   "0000",
 begin
     
     -- Process for reading data out of the data source when enable is on
-    PROCESS (clk, en)
+    PROCESS (clk, en, rst)
         variable input_var: integer range 0 to 63;
     BEGIN
         

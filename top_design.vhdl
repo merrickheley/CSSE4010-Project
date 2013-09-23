@@ -69,7 +69,7 @@ component Hamming_Encoder port (
     rst    :          in  std_logic;
     en     :          in  std_logic;
     input  :          in  std_logic_vector(3 downto 0);
-    err    :          in  std_logic_vector(3 downto 0);
+    err    :          in  std_logic_vector(7 downto 0);
     output :          out std_logic_vector(7 downto 0)
     ); 
 end component;
@@ -149,7 +149,7 @@ component Transmitter_Controller port (
            st_Transmit :     in  std_logic;
            st_Disp :         in  std_logic;
            en_Data :         out std_logic;
-           en_Enc1 :         out std_logic;
+           en_Enc  :         out std_logic;
            en_Enc2 :         out std_logic
 ); end component;
 
@@ -253,8 +253,8 @@ signal digit4 : std_logic_vector(3 downto 0);
 
 begin
 
-slowClock <= clockScalers(12);
-fastClock <= clockScalers(9);
+slowClock <= clockScalers(16);
+fastClock <= clockScalers(12);
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
@@ -343,7 +343,7 @@ Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
 Hamming_Error <= slideSwitches;
 masterReset   <= pushButtons(3);
 Disp_Sink     <= pushButtons(2);
-Disk_Source   <= pushButtons(1);
+Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
 LEDs(7 downto 0) <= "0000000" & Coded_Output;

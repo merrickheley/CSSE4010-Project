@@ -45,7 +45,7 @@ SIGNAL stateMid   : STATE_MID;
 begin
 
     -- Process for reading data out of the data source when enable is on
-    PROCESS (clk, en)
+    PROCESS (clk, en, rst)
     BEGIN
         
         -- On reset set the controller back to initial state
@@ -59,7 +59,7 @@ begin
             stateTop <= s0;
             stateMid <= A;
             outSig <= '1';
-            outBit <= "000";
+            --outBit <= "000";
         -- On clock edges move between the states in the state machine
         -- stateTop tracks the bit being used for the transmission
         -- stateMid tracks whether the bit is inverted or not
@@ -76,7 +76,7 @@ begin
                             stateMid <= A;
                             stateTop <= s1;
                     END CASE;
-                    outBit <= "000";
+                    --outBit <= "000";
                 WHEN s1 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -88,7 +88,7 @@ begin
                             stateMid <= A;
                             stateTop <= s2;
                     END CASE;
-                    outBit <= "001";
+                    --outBit <= "001";
                 WHEN s2 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -100,7 +100,7 @@ begin
                             stateMid <= A;
                             stateTop <= s3;
                     END CASE;
-                    outBit <= "010";
+                    --outBit <= "010";
                 WHEN s3 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -112,7 +112,7 @@ begin
                             stateMid <= A;
                             stateTop <= s4;
                     END CASE;
-                    outBit <= "011";
+                    --outBit <= "011";
                 WHEN s4 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -124,7 +124,7 @@ begin
                             stateMid <= A;
                             stateTop <= s5;
                     END CASE;
-                    outBit <= "100";
+                    --outBit <= "100";
                 WHEN s5 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -136,7 +136,7 @@ begin
                             stateMid <= A;
                             stateTop <= s6;
                     END CASE; 
-                    outBit <= "101";                    
+                    --outBit <= "101";                    
                 WHEN s6 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -148,7 +148,7 @@ begin
                             stateMid <= A;
                             stateTop <= s7;
                     END CASE;
-                    outBit <= "110";                    
+                    --outBit <= "110";                    
                 WHEN s7 =>
                     CASE stateMid IS
                         WHEN A =>
@@ -160,10 +160,12 @@ begin
                             stateMid <= A;
                             stateTop <= s0;
                     END CASE;
-                    outBit <= "111";
+                    --outBit <= "111";
             END CASE;
         end if;
     END PROCESS;
-    
+
+    outBit <= "000";
+
 end Behavioral;
 

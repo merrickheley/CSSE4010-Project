@@ -50,7 +50,7 @@ signal count : std_logic_vector(5 downto 0);
 
 begin
     -- Process for controller the transmitter state
-    PROCESS (clk)
+    PROCESS (clk, rst)
     BEGIN
         
         -- On reset set the controller back to initial state

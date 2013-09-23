@@ -34,8 +34,8 @@ entity Hamming_Encoder is
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
            input : in  STD_LOGIC_VECTOR (3 downto 0);
-           err : in  STD_LOGIC_VECTOR (3 downto 0);
-           output : in  STD_LOGIC_VECTOR (7 downto 0));
+           err : in  STD_LOGIC_VECTOR (7 downto 0);
+           output : out  STD_LOGIC_VECTOR (7 downto 0));
 end Hamming_Encoder;
 
 architecture Behavioral of Hamming_Encoder is
@@ -46,7 +46,7 @@ begin
 
 
     -- Process for reading data out of the data source when enable is on
-    PROCESS (clk, en)
+    PROCESS (clk, en, rst)
     BEGIN
         
         -- On reset set the controller back to initial state
