@@ -29,13 +29,14 @@ entity Manchester_Decoder is
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
            input : in  STD_LOGIC;
+           decode_valid : out STD_LOGIC;
            decoded : out  STD_LOGIC_VECTOR (7 downto 0));
 end Manchester_Decoder;
 
 architecture Behavioral of Manchester_Decoder is
  
 -- Idle, sampling clock, recieving.
-TYPE STATE_TOP IS (A, B, C, D);
+TYPE STATE_TOP IS (A, B, C);
 SIGNAL y   : STATE_TOP;
 
 -- Count the number of samples for half a manchester bit
@@ -56,6 +57,9 @@ signal lastHalfBit : STD_LOGIC := '0';
 signal lowBin  : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 signal highBin : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 
+-- Byte bin
+signal lowByteBin : STD_LOGIC_VECTOR(10 downto 0) := "00000000000";
+
 -- Register holding the generated input byte
 signal outputReg : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 
@@ -68,6 +72,7 @@ begin
         -- On reset set the controller back to initial state
         if rst = '1' then
             outputReg <= "00000000";
+            decode_valid <= '0';
             y <= A;
         
         -- This does not currently work and will simply duplicate the data
@@ -102,6 +107,7 @@ begin
                                 buildBit <= '1';
                                 lastHalfBit <= '0';
                                 
+                                lowByteBin <= "00000000000";
                                 lowBin <= "00000000";
                                 highBin <= "00000001";
                                 y <= C;
@@ -116,17 +122,20 @@ begin
                             -- If the first half bit has already been received
                             if buildBit  = '1' then
                                 
+                                -- Add the new bit to the output ass it's being build
                                 if lowBin > highBin then
                                     buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
                                 else
                                     buildingOutput(conv_integer(buildStage)) <= lastHalfBit;
                                 end if;
                                 
+                                -- Reset the build stages and bits
                                 buildBit <= '0';
                                 buildStage <= buildStage + '1';
                                 
                             -- if we are recieving the first halfbit
-                            else                            
+                            else
+                                -- Log the half bit and increment the build bit
                                 if lowBin > highBin then
                                     lastHalfBit <= '0';
                                 else
@@ -135,21 +144,37 @@ begin
                                 buildBit <= '1';
                             end if;
                             
+                            -- Reset the count samples
                             countSamples <= "00000000";
                             lowBin <= "00000000";
                             highBin <= "00000000";
                             
                         else
-                            if buildStage = "000" and countSamples = "00000000" then
-                                outputReg <= buildingOutput;
-                                
-                                if countSamples > (dataSamples(5 downto 0) & "00") then
-                                    y <= A;
+                            
+                            -- If it's the start of a new data bit, output the old bit and check if the signal is high
+                            if buildStage = "000" and buildBit = '0' then
+                                if countSamples = "00000000" then
+                                    -- If less than 8 low samples have been received in a single byte, the line is high
+                                    -- reset the fsm
+                                    if lowByteBin < "00000001000" then
+                                        outputReg <= "00000000";
+                                        y <= A;
+                                    -- Data is valid, output the data and indicate validity
+                                    else
+                                        outputReg <= buildingOutput;
+                                        decode_valid <= '1';
+                                        lowByteBin <= "00000000000";
+                                    end if;
+                                else
+                                    decode_valid <= '0';
                                 end if;
+                            elsif input = '0' then
+                                lowByteBin <= lowByteBin + '1';
                             end if;
                             
                             countSamples <= countSamples + '1';
                             
+                            -- Add the bit to the bin
                             if input = '0' then
                                 lowBin <= lowBin + '1';
                             else

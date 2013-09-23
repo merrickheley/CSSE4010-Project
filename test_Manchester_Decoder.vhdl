@@ -30,6 +30,7 @@ ARCHITECTURE behavior OF test_Manchester_Decoder IS
          rst : IN  std_logic;
          en : IN  std_logic;
          input : IN  std_logic;
+         decode_valid : out STD_LOGIC;
          decoded : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
@@ -42,6 +43,7 @@ ARCHITECTURE behavior OF test_Manchester_Decoder IS
    signal input : std_logic := '0';
 
  	--Outputs
+   signal decode_valid : std_logic;
    signal decoded : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
@@ -58,6 +60,7 @@ BEGIN
           rst => rst,
           en => en,
           input => input,
+          decode_valid => decode_valid,
           decoded => decoded
         );
 
@@ -106,11 +109,44 @@ BEGIN
           wait for clk_period*10;
           input <= not(dataByte(I));
       end loop;
+      
+      dataByte <= "01001100";
+      -- Send start byte
+      for I in 0 to 7 loop
+          wait for clk_period*10;
+          input <= dataByte(I);
+          wait for clk_period*10;
+          input <= not(dataByte(I));
+      end loop;
       dataByte <= "00000000";
     
         
       wait for clk_period*10;
       input <= '1';
+      wait for clk_period*200;
+      
+      dataByte <= "00000000";
+      -- Send start byte
+      for I in 0 to 7 loop
+          wait for clk_period*10;
+          input <= dataByte(I);
+          wait for clk_period*10;
+          input <= not(dataByte(I));
+      end loop;
+      
+      dataByte <= "00111101";
+      -- Send start byte
+      for I in 0 to 7 loop
+          wait for clk_period*10;
+          input <= dataByte(I);
+          wait for clk_period*10;
+          input <= not(dataByte(I));
+      end loop;
+      dataByte <= "00000000";
+      
+      wait for clk_period*10;
+      input <= '1';
+      
       wait;
    end process;
 
