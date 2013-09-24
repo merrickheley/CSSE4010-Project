@@ -32,7 +32,8 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
          pushButtons : IN  std_logic_vector(3 downto 0);
          LEDs : OUT  std_logic_vector(7 downto 0);
          clk50mhz : IN  std_logic;
-         logic_analyzer : OUT  std_logic_vector(7 downto 0)
+         logic_analyzer : OUT  std_logic_vector(7 downto 0);
+         input_series : IN std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
@@ -41,6 +42,7 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
    signal slideSwitches : std_logic_vector(7 downto 0) := (others => '0');
    signal pushButtons : std_logic_vector(3 downto 0) := (others => '0');
    signal clk50mhz : std_logic := '0';
+   signal input_series : std_logic_vector(7 downto 0) := (others => '0');
 
  	--Outputs
    signal ssegAnode : std_logic_vector(3 downto 0);
@@ -61,7 +63,8 @@ BEGIN
           pushButtons => pushButtons,
           LEDs => LEDs,
           clk50mhz => clk50mhz,
-          logic_analyzer => logic_analyzer
+          logic_analyzer => logic_analyzer,
+          input_series => input_series          
         );
 
    -- Clock process definitions
@@ -94,6 +97,10 @@ BEGIN
       wait for clk50mhz_period*10;
       
       pushButtons(0) <= '1';
+
+      wait for clk50mhz_period*100;
+      
+      -- pushButtons(0) <= '0';
 
       -- insert stimulus here 
 

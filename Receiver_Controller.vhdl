@@ -76,6 +76,7 @@ begin
         end if;
     END PROCESS;
     
+    display <= count;
     en_dec <= '1';
 
 end Behavioral;

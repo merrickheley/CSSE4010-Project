@@ -68,6 +68,7 @@ begin
         
         if (rst = '1') then
             index <= "000000";
+            RAM <= (others => (others => '0'));
         elsif clk'event and clk = '1' then
             if en = '1' then
                 RAM(conv_integer(index)) <= input;
