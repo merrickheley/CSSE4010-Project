@@ -34,7 +34,8 @@ entity top_design is
             pushButtons :       in  STD_LOGIC_VECTOR (3 downto 0);  -- Push button input
             LEDs :              out STD_LOGIC_VECTOR (7 downto 0);  -- LED's on the board
             clk50mhz :          in  STD_LOGIC;                      -- 50mhz system clock
-            logic_analyzer :    out STD_LOGIC_VECTOR (7 downto 0)   -- Output for the logic analyser
+            logic_analyzer :    out STD_LOGIC_VECTOR (7 downto 0);  -- Output for the logic analyser
+            input_series :     in  STD_LOGIC_VECTOR (7 downto 0)   -- Input for the manchester demodulator
 ); end top_design;
 
 architecture Behavioral of top_design is
@@ -107,39 +108,29 @@ component Manchester_Decoder port (
 
 -------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Hamming decoder
---
+-- Component for hamming decoder
 -- The hamming decoder will take an input signal, and will output the 
 -- hamming corrected signal.
---
--- component Hamming_Decoder port (
---            clk     :          in  std_logic;
---            rst     :          in  std_logic;
---            en      :          in  std_logic;
---            input   :          in  std_logic_vector(7 downto 0;
---            decoded :          out std_logic_vector(3 downto 0)
--- ); end component;
---
--------------------------------------------------------------------------------
+component Hamming_Decoder port (
+        clk     :          in  std_logic;
+        rst     :          in  std_logic;
+        en      :          in  std_logic;
+        input   :          in  std_logic_vector(7 downto 0);
+        decode_valid :     out std_logic;
+        decoded :          out std_logic_vector(3 downto 0)
+); end component;
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Data sink
---
--- The data source will store the received message and output char by char 
--- to out1
---
--- component Data_Source port (
---            clk   :            in  std_logic;
---            rst   :            in  std_logic;
---            en    :            in  std_logic;
---            input :            in  std_logic_vector(3 downto 0);
---            out1  :            out std_logic_vector(3 downto 0)
--- ); end component;
---
--------------------------------------------------------------------------------
+-- Component for data sink
+-- The data sink will store the received message in a circular buffer and
+-- will output the value of the read_ram to out1
+component Data_Sink port (
+           clk   :            in  std_logic;
+           rst   :            in  std_logic;
+           en    :            in  std_logic;
+           input :            in  std_logic_vector(3 downto 0);
+           read_ram :         in STD_LOGIC_VECTOR (5 downto 0);
+           out1  :            out std_logic_vector(3 downto 0)
+); end component;
 
 -- Component for Transmitter controller
 -- The transmitter controller will control when data will be sent and the
@@ -154,22 +145,16 @@ component Transmitter_Controller port (
            en_Enc2 :         out std_logic
 ); end component;
 
--------------------------------------------------------------------------------
--- 
--- Placeholder for Receiver controller
---
--- The transmitter controller will control when data will be received and when 
+-- Component for the receiver controller
+-- The receiver controller will control when data will be logged and when 
 -- to display
---
--- component Receiver_Controller port (
---            clk  :            in  std_logic;
---            rst  :            in  std_logic;
---            st_Transmit :     in  std_logic;
---            en_Data :         out std_logic;
---            en_Enc1 :         out std_logic;
--- ); end component;
---
--------------------------------------------------------------------------------
+component Receiver_Controller port (
+           clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
+           en_dec : out  STD_LOGIC;
+           display : out  STD_LOGIC_VECTOR(5 downto 0);
+           start_display : in  STD_LOGIC
+); end component;
 
 ----------------------------------
 -- User Interface
@@ -236,6 +221,7 @@ signal Raw_Sink           : std_logic_vector(3 downto 0);          -- Decoded ha
 ----------------------------------
 signal En_Sink            : std_logic;                      -- Enable the data sink
 signal Matrix_Sink        : std_logic_vector(3 downto 0);   -- Output for the matrix display
+signal Read_Ram           : std_logic_vector(5 downto 0);   -- Read a value out of the sink ram
 
 ----------------------------------
 -- User interface signals 
@@ -350,19 +336,49 @@ Inst_Manchester_Encoder: Manchester_Encoder PORT MAP(
     outSig => Coded_Output
 );
 
-En_Manchester_Decoder <= '1';
-Coded_Input <= slideSwitches(0);
-
 -- Instance for the manchester decoder
 -- Must be run at a significantly faster clock than the manchester encoder
 Inst_Manchester_Decoder: Manchester_Decoder PORT MAP(
     clk => sampleClock,
     rst => masterReset,
     en => En_Manchester_Decoder,
-    input => Coded_Input,
+    input => Coded_Output, --Coded_Input,
     decode_valid => En_Hamming_Decoder,
     decoded => Decoded_Manchester
 );
+
+-- Instance for the hamming decoder
+-- Must be run at the same clock speed as the manchester decoder
+Inst_Hamming_Decoder: Hamming_Decoder PORT MAP(
+    clk => sampleClock,
+    rst => masterReset,
+    en => En_Hamming_Decoder,
+    input => Decoded_Manchester,
+    decode_valid => En_Sink,
+    decoded => Raw_Sink
+);
+
+Inst_Data_Sink: Data_Sink PORT MAP(
+    clk => sampleClock,
+    rst => masterReset,
+    en => En_Sink,
+    input => Raw_Sink,
+    read_ram => Read_Ram,
+    out1 => digit1
+);
+
+Inst_Receiver_Controller: Receiver_Controller PORT MAP(
+    clk => secClock,
+    rst => masterReset,
+    en_dec => En_Manchester_Decoder,
+    display => Read_Ram,
+    start_display => Disp_Sink
+);
+
+-- Instance for the user interface
+digit2 <= "0000";
+digit3 <= "0000";
+digit4 <= "0000";
 
 Hamming_Error <= slideSwitches;
 masterReset   <= pushButtons(3);
@@ -379,5 +395,7 @@ LEDs(0) <= Coded_Output;
 --logic_analyzer(7 downto 1) <= "0000000";
 --logic_analyzer(0) <= Coded_Output;
 logic_analyzer <= Decoded_Manchester;
+
+Coded_Input <= input_series(0);
 		 
 end Behavioral;

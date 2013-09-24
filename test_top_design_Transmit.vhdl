@@ -87,7 +87,7 @@ BEGIN
       
       pushButtons(3) <= '1';
       
-      wait for clk50mhz_period*10;
+      wait for clk50mhz_period*1000;
       
       pushButtons(3) <= '0';
       
