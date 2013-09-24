@@ -18,7 +18,8 @@
 --
 --     Milestone 2: 2013-09-17
 --
--- Added data source, shell for hamming encoder and decoder, and manchester encoder and decoder.
+-- Added data source, shell for hamming encoder and decoder, and manchester encoder and 
+-- decoder are tested and working. Todo: Matrix driver, hamming encoder/decoder
 --
 -------------------------------------------------------------------------------
 library IEEE;
@@ -342,7 +343,7 @@ Inst_Manchester_Decoder: Manchester_Decoder PORT MAP(
     clk => sampleClock,
     rst => masterReset,
     en => En_Manchester_Decoder,
-    input => Coded_Output, --Coded_Input,
+    input => Coded_Input,
     decode_valid => En_Hamming_Decoder,
     decoded => Decoded_Manchester
 );
@@ -392,9 +393,9 @@ LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
 
---logic_analyzer(7 downto 1) <= "0000000";
---logic_analyzer(0) <= Coded_Output;
-logic_analyzer <= Decoded_Manchester;
+logic_analyzer(7 downto 1) <= "0000000";
+logic_analyzer(0) <= Coded_Output;
+--logic_analyzer <= Decoded_Manchester;
 
 Coded_Input <= input_series(0);
 		 
