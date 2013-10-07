@@ -26,40 +26,43 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Matrix_Driver is
     Port ( clk : in  STD_LOGIC;
+--           slowClk : in STD_LOGIC;
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC_VECTOR (1 downto 0);
            data_source : in  STD_LOGIC_VECTOR (3 downto 0);
            data_sink : in  STD_LOGIC_VECTOR (3 downto 0);
-           led_matrix : out  STD_LOGIC_VECTOR (15 downto 0);
+           led_matrix : out  STD_LOGIC_VECTOR (14 downto 0);
            row_select : out  STD_LOGIC_VECTOR (2 downto 0));
 end Matrix_Driver;
 
 architecture Behavioral of Matrix_Driver is
 
-type matrix_number_type is array(0 to 7) of std_logic_vector(3 downto 0);
+type matrix_number_type is array(7 downto 0) of std_logic_vector(3 downto 0);
 type matrix_numbers_type is array (0 to 15) of matrix_number_type;
 
-signal matrix_numbers : matrix_numbers_type := (("0110", "1001", "1001", "1001", "1001", "1001", "0110", "0000"),   -- 0
-                                                ("0010", "0010", "0010", "0010", "0010", "0010", "0010", "0000"), 	-- 1
-                                                ("1111", "0001", "0010", "0100", "1001", "1001", "1110", "0000"),   -- 2
-                                                ("0111", "1000", "0100", "0010", "0100", "1000", "0111", "0000"),   -- 3
-                                                ("0100", "0100", "0100", "1111", "0101", "0001", "0001", "0000"),   -- 4
-                                                ("0111", "1000", "1000", "0110", "0001", "0001", "1111", "0000"),   -- 5
-                                                ("1111", "1001", "1001", "1111", "0001", "0001", "1110", "0000"), 	-- 6
-                                                ("1000", "1000", "1000", "1000", "1000", "1000", "1111", "0000"),   -- 7
-                                                ("1111", "1001", "1001", "1111", "1001", "1001", "1111", "0000"), 	-- 8
-                                                ("1000", "1000", "1000", "1111", "1001", "1001", "1111", "0000"), 	-- 9
-                                                ("1001", "1001", "1001", "1111", "1001", "1001", "0110", "0000"), 	-- A
-                                                ("0111", "1001", "1001", "0111", "1001", "1001", "0111", "0000"), 	-- B
-                                                ("1110", "0001", "0001", "0001", "0001", "0001", "1110", "0000"),   -- C
-                                                ("0011", "0101", "1001", "1001", "1001", "0101", "0011", "0000"), 	-- D
-                                                ("1111", "0001", "0001", "1111", "0001", "0001", "1111", "0000"),   -- E
-                                                ("0001", "0001", "0001", "1111", "0001", "0001", "1111", "0000")	-- F       
+signal matrix_numbers : matrix_numbers_type := (("0110", "0000", "0110", "1001", "1001", "1001", "1001", "1001"),   -- 0
+                                                ("0010", "0000", "0010", "0010", "0010", "0010", "0010", "0010"), 	-- 1
+                                                ("1110", "0000", "1111", "0001", "0010", "0100", "1001", "1001"),   -- 2
+                                                ("0111", "0000", "0111", "1000", "0100", "0010", "0100", "1000"),   -- 3
+                                                ("0001", "0000", "0100", "0100", "0100", "1111", "0101", "0001"),   -- 4
+                                                ("1111", "0000", "0111", "1000", "1000", "0110", "0001", "0001"),   -- 5
+                                                ("1110", "0000", "1111", "1001", "1001", "1111", "0001", "0001"), 	-- 6
+                                                ("1111", "0000", "1000", "1000", "1000", "1000", "1000", "1000"),   -- 7
+                                                ("1111", "0000", "1111", "1001", "1001", "1111", "1001", "1001"), 	-- 8
+                                                ("1111", "0000", "1000", "1000", "1000", "1111", "1001", "1001"), 	-- 9
+                                                ("0110", "0000", "1001", "1001", "1001", "1111", "1001", "1001"), 	-- A
+                                                ("0111", "0000", "0111", "1001", "1001", "0111", "1001", "1001"), 	-- B
+                                                ("1110", "0000", "1110", "0001", "0001", "0001", "0001", "0001"),   -- C
+                                                ("0011", "0000", "0011", "0101", "1001", "1001", "1001", "0101"), 	-- D
+                                                ("1111", "0000", "1111", "0001", "0001", "1111", "0001", "0001"),   -- E
+                                                ("1111", "0000", "0001", "0001", "0001", "1111", "0001", "0001")	-- F       
                                                 );
                        
 signal digit1 : std_logic_vector(3 downto 0) := "0000";
 signal digit2 : std_logic_vector(3 downto 0) := "0000";
 signal digit3 : std_logic_vector(3 downto 0) := "0000";
+
+signal input : std_logic_vector(3 downto 0) := "0000";
 
 signal row : std_logic_vector(2 downto 0);
 
@@ -78,7 +81,7 @@ begin
         -- 
         if rst = '1' then
             row <= "000";
-            led_matrix <= "0000000000000000";
+            led_matrix <= "000000000000000";
 
         elsif clk'event and clk = '1'  then
             row_var    := conv_integer(row);
@@ -89,7 +92,7 @@ begin
             -- Enable the data source printing
             if    en = "01" then
                 row <= "000";
-                led_matrix <= "0000000000000000";
+                led_matrix <= "000000000000000";
             
             -- Enable the data sink printing
             elsif en = "10" then
@@ -97,18 +100,20 @@ begin
                 digit2 <= "0010";
                 row <= row + '1';               
                 
-                led_matrix <= matrix_numbers(digit1_var)(row_var) & '0' &
-                              matrix_numbers(digit2_var)(row_var) & '0' &
-                              matrix_numbers(digit3_var)(row_var) & '0' & '0';          
+                led_matrix <= not('0' & matrix_numbers(digit1_var)(row_var) &
+                                  '0' & matrix_numbers(digit2_var)(row_var) &
+                                  '0' & matrix_numbers(digit3_var)(row_var));          
                 
             -- Print nothing, either not enable or both enabled
             else
                 row <= "000";
-                led_matrix <= "0000000000000000";
+                led_matrix <= "000000000000000";
                 
             end if;
         end if;
     END PROCESS;
+    
+    
     
     row_select <= row;
 

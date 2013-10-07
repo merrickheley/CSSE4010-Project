@@ -41,7 +41,7 @@ entity top_design is
             logic_analyzer :    out STD_LOGIC_VECTOR (6 downto 0);  -- Output for the logic analyser
             input :             in  STD_LOGIC;                      -- Input for the manchester demodulator
             row_select :        out STD_LOGIC_VECTOR (2 downto 0);  -- Row select for the matrix driver
-            led_matrix :        out STD_LOGIC_VECTOR (15 downto 0)  -- Matrix output for the row
+            led_matrix :        out STD_LOGIC_VECTOR (14 downto 0)  -- Matrix output for the row
 ); end top_design;
 
 architecture Behavioral of top_design is
@@ -192,7 +192,7 @@ COMPONENT Matrix_Driver PORT(
     en : IN std_logic_vector(1 downto 0);
     data_source : IN std_logic_vector(3 downto 0);
     data_sink : IN std_logic_vector(3 downto 0);          
-    led_matrix : OUT std_logic_vector(15 downto 0);
+    led_matrix : OUT std_logic_vector(14 downto 0);
     row_select : OUT std_logic_vector(2 downto 0)
     );
 END COMPONENT;

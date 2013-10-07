@@ -64,7 +64,7 @@ NET "led_matrix<11>"    LOC = "H16";
 NET "led_matrix<12>"    LOC = "H15";
 NET "led_matrix<13>"    LOC = "F14";
 NET "led_matrix<14>"    LOC = "G16";
-NET "led_matrix<15>"    LOC = "J12";
+#NET "led_matrix<14>"    LOC = "J12";
 # JD
 NET "row_select<0>"	    LOC = "J13"	;
 NET "row_select<1>"	    LOC = "M18"	;

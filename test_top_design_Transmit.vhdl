@@ -35,7 +35,7 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
          logic_analyzer :    out STD_LOGIC_VECTOR (6 downto 0);  -- Output for the logic analyser
          input :             in  STD_LOGIC;                      -- Input for the manchester demodulator
          row_select :        out STD_LOGIC_VECTOR (2 downto 0);  -- Row select for the matrix driver
-         led_matrix :        out STD_LOGIC_VECTOR (15 downto 0)  -- Matrix output for the row
+         led_matrix :        out STD_LOGIC_VECTOR (14 downto 0)  -- Matrix output for the row
         );
     END COMPONENT;
     
@@ -53,7 +53,7 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
    signal logic_analyzer : std_logic_vector(6 downto 0);
 
    signal row_select : std_logic_vector(2 downto 0);
-   signal led_matrix : std_logic_vector(15 downto 0);
+   signal led_matrix : std_logic_vector(14 downto 0);
 
    -- Clock period definitions
    constant clk50mhz_period : time := 10 ns;
