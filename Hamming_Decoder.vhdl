@@ -67,12 +67,12 @@ begin
         -- Form syndromes 
         elsif clk'event and clk = '1'  then
             if en = '1' then
-                decode_valid <= '1';
                 
                 s0 := conv_integer(input(6) xor input(0) xor input(1) xor input(3));
                 s1 := conv_integer(input(5) xor input(0) xor input(2) xor input(3));
                 s2 := conv_integer(input(4) xor input(1) xor input(2) xor input(3));
-
+                
+                decode_valid <= '1';
                 decoded <= input(3 downto 0) xor my_lut(s0*4 + s1*2 + s2)(3 downto 0);
                 
             else

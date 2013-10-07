@@ -38,8 +38,10 @@ entity top_design is
             pushButtons :       in  STD_LOGIC_VECTOR (3 downto 0);  -- Push button input
             LEDs :              out STD_LOGIC_VECTOR (7 downto 0);  -- LED's on the board
             clk50mhz :          in  STD_LOGIC;                      -- 50mhz system clock
-            logic_analyzer :    out STD_LOGIC_VECTOR (7 downto 0);  -- Output for the logic analyser
-            input_series :     in  STD_LOGIC_VECTOR (7 downto 0)   -- Input for the manchester demodulator
+            logic_analyzer :    out STD_LOGIC_VECTOR (6 downto 0);  -- Output for the logic analyser
+            input :             in  STD_LOGIC;                      -- Input for the manchester demodulator
+            row_select :        out STD_LOGIC_VECTOR (2 downto 0);  -- Row select for the matrix driver
+            led_matrix :        out STD_LOGIC_VECTOR (15 downto 0)  -- Matrix output for the row
 ); end top_design;
 
 architecture Behavioral of top_design is
@@ -177,6 +179,24 @@ component Receiver_Controller port (
 --    );
 --END COMPONENT;
 
+----------------------------------
+-- Matrix Driver
+----------------------------------
+-- Display digits to the LED matrix
+-- en 00/11 : do nothing
+-- en 01    : data source input
+-- en 10    : data sink input
+COMPONENT Matrix_Driver PORT(
+    clk : IN std_logic;
+    rst : IN std_logic;
+    en : IN std_logic_vector(1 downto 0);
+    data_source : IN std_logic_vector(3 downto 0);
+    data_sink : IN std_logic_vector(3 downto 0);          
+    led_matrix : OUT std_logic_vector(15 downto 0);
+    row_select : OUT std_logic_vector(2 downto 0)
+    );
+END COMPONENT;
+
 
 ----------------------------------
 -- Clock signals
@@ -243,6 +263,13 @@ signal digit1 : std_logic_vector(3 downto 0);
 signal digit2 : std_logic_vector(3 downto 0);
 signal digit3 : std_logic_vector(3 downto 0);
 signal digit4 : std_logic_vector(3 downto 0);
+
+----------------------------------
+-- Test enable
+-- This is test code and can be removed
+----------------------------------
+signal enMatrix : std_logic_vector(1 downto 0);
+
 
 begin
 
@@ -379,6 +406,17 @@ Inst_Receiver_Controller: Receiver_Controller PORT MAP(
     start_display => Disp_Sink
 );
 
+enMatrix <= "10";
+Inst_Matrix_Driver: Matrix_Driver PORT MAP(
+    clk => fastClock,
+    rst => masterReset,
+    en => enMatrix,
+    data_source => digit4,
+    data_sink => digit1,
+    led_matrix => led_matrix,
+    row_select => row_select
+);
+
 -- Instance for the user interface
 digit2 <= "0000";
 digit3 <= "0000";
@@ -396,10 +434,10 @@ LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
 
-logic_analyzer(7 downto 1) <= "0000000";
+logic_analyzer(6 downto 1) <= "000000";
 logic_analyzer(0) <= Coded_Output;
 --logic_analyzer <= Decoded_Manchester;
 
-Coded_Input <= input_series(0);
+Coded_Input <= input;
 		 
 end Behavioral;

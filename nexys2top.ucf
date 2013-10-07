@@ -45,34 +45,35 @@ NET "logic_analyzer<3>"  LOC = "M15"  ;
 NET "logic_analyzer<4>"  LOC = "K13"  ;
 NET "logic_analyzer<5>"  LOC = "L16"  ;
 NET "logic_analyzer<6>"  LOC = "M14"  ;
-NET "logic_analyzer<7>"  LOC = "M16"  ;
+#NET "logic_analyzer<7>"  LOC = "M16"  ;
+NET "input"              LOC = "M16"  ;
 # JB
-NET "input_series<0>"   LOC = "M13" ;
-NET "input_series<1>"   LOC = "R18";
-NET "input_series<2>"   LOC = "R15";
-NET "input_series<3>"   LOC = "T17";
-NET "input_series<4>"   LOC = "P17";
-NET "input_series<5>"   LOC = "R16";
-NET "input_series<6>"   LOC = "T18";
-NET "input_series<7>"   LOC = "U18";
+NET "led_matrix<0>"     LOC = "M13" ;
+NET "led_matrix<1>"     LOC = "R18";
+NET "led_matrix<2>"     LOC = "R15";
+NET "led_matrix<3>"     LOC = "T17";
+NET "led_matrix<4>"     LOC = "P17";
+NET "led_matrix<5>"     LOC = "R16";
+NET "led_matrix<6>"     LOC = "T18";
+NET "led_matrix<7>"     LOC = "U18";
 # JC
-NET "led_matrix<0>"   LOC = "G15";
-NET "led_matrix<1>"   LOC = "J16";
-NET "led_matrix<2>"   LOC = "G13";
-NET "led_matrix<3>"   LOC = "H16";
-NET "led_matrix<4>"   LOC = "H15";
-NET "led_matrix<5>"   LOC = "F14";
-NET "led_matrix<6>"   LOC = "G16";
-NET "led_matrix<7>"   LOC = "J12";
+NET "led_matrix<8>"     LOC = "G15";
+NET "led_matrix<9>"     LOC = "J16";
+NET "led_matrix<10>"    LOC = "G13";
+NET "led_matrix<11>"    LOC = "H16";
+NET "led_matrix<12>"    LOC = "H15";
+NET "led_matrix<13>"    LOC = "F14";
+NET "led_matrix<14>"    LOC = "G16";
+NET "led_matrix<15>"    LOC = "J12";
 # JD
-NET "row_select<0>"	LOC = "J13"	;
-NET "row_select<1>"	LOC = "M18"	;
-NET "row_select<2>"	LOC = "N18"	;
-#NET "row_select<3>"	LOC = "P18"	;
-#NET "row_select<4>"	LOC = "K14"	;
-#NET "row_select<5>"	LOC = "K15"	;
-#NET "row_select<6>"	LOC = "J15"	;
-#NET "row_select<7>"	LOC = "J14"	;
+NET "row_select<0>"	    LOC = "J13"	;
+NET "row_select<1>"	    LOC = "M18"	;
+NET "row_select<2>"	    LOC = "N18"	;
+#NET "row_select<11>"	LOC = "P18"	;
+#NET "led_matrix<12>"	LOC = "K14"	;
+#NET "led_matrix<13>"	LOC = "K15"	;
+#NET "led_matrix<14>"	LOC = "J15"	;
+#NET "led_matrix<15>"	LOC = "J14"	;
 
 
 #PACE: Start of PACE Area Constraints
