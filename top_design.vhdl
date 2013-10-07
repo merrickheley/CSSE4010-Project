@@ -39,7 +39,7 @@ entity top_design is
             LEDs :              out STD_LOGIC_VECTOR (7 downto 0);  -- LED's on the board
             clk50mhz :          in  STD_LOGIC;                      -- 50mhz system clock
             logic_analyzer :    out STD_LOGIC_VECTOR (6 downto 0);  -- Output for the logic analyser
-            input :             in  STD_LOGIC;                      -- Input for the manchester demodulator
+            encoded_input :     in  STD_LOGIC;                      -- Input for the manchester demodulator
             row_select :        out STD_LOGIC_VECTOR (2 downto 0);  -- Row select for the matrix driver
             led_matrix :        out STD_LOGIC_VECTOR (14 downto 0)  -- Matrix output for the row
 ); end top_design;
@@ -373,7 +373,7 @@ Inst_Manchester_Decoder: Manchester_Decoder PORT MAP(
     clk => sampleClock,
     rst => masterReset,
     en => En_Manchester_Decoder,
-    input => Coded_Input,
+    input => Coded_Output,      -- Should be 'Coded_Input'
     decode_valid => En_Hamming_Decoder,
     decoded => Decoded_Manchester
 );
@@ -438,6 +438,6 @@ logic_analyzer(6 downto 1) <= "000000";
 logic_analyzer(0) <= Coded_Output;
 --logic_analyzer <= Decoded_Manchester;
 
-Coded_Input <= input;
+Coded_Input <= encoded_input;
 		 
 end Behavioral;

@@ -33,7 +33,7 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
          LEDs :              out STD_LOGIC_VECTOR (7 downto 0);  -- LED's on the board
          clk50mhz :          in  STD_LOGIC;                      -- 50mhz system clock
          logic_analyzer :    out STD_LOGIC_VECTOR (6 downto 0);  -- Output for the logic analyser
-         input :             in  STD_LOGIC;                      -- Input for the manchester demodulator
+         encoded_input :     in  STD_LOGIC;                      -- Input for the manchester demodulator
          row_select :        out STD_LOGIC_VECTOR (2 downto 0);  -- Row select for the matrix driver
          led_matrix :        out STD_LOGIC_VECTOR (14 downto 0)  -- Matrix output for the row
         );
@@ -44,7 +44,7 @@ ARCHITECTURE behavior OF test_top_design_transmit IS
    signal slideSwitches : std_logic_vector(7 downto 0) := (others => '0');
    signal pushButtons : std_logic_vector(3 downto 0) := (others => '0');
    signal clk50mhz : std_logic := '0';
-   signal input : std_logic;
+   signal encoded_input : std_logic;
    
  	--Outputs
    signal ssegAnode : std_logic_vector(3 downto 0);
@@ -69,7 +69,7 @@ BEGIN
           LEDs => LEDs,
           clk50mhz => clk50mhz,
           logic_analyzer => logic_analyzer,
-          input => input,
+          encoded_input => encoded_input,
           row_select => row_select,
           led_matrix => led_matrix
         );
@@ -82,7 +82,8 @@ BEGIN
 		clk50mhz <= '1';
 		wait for clk50mhz_period/2;
    end process;
- 
+    
+   encoded_input <= logic_analyzer(0);
 
    -- Stimulus process
    stim_proc: process

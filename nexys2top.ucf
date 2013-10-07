@@ -46,7 +46,7 @@ NET "logic_analyzer<4>"  LOC = "K13"  ;
 NET "logic_analyzer<5>"  LOC = "L16"  ;
 NET "logic_analyzer<6>"  LOC = "M14"  ;
 #NET "logic_analyzer<7>"  LOC = "M16"  ;
-NET "input"              LOC = "M16"  ;
+NET "encoded_input"      LOC = "M16"  ;
 # JB
 NET "led_matrix<0>"     LOC = "M13" ;
 NET "led_matrix<1>"     LOC = "R18";

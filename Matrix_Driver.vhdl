@@ -97,7 +97,7 @@ begin
             -- Enable the data sink printing
             elsif en = "10" then
             
-                digit2 <= "0010";
+                digit2 <= data_sink;
                 row <= row + '1';               
                 
                 led_matrix <= not('0' & matrix_numbers(digit1_var)(row_var) &
