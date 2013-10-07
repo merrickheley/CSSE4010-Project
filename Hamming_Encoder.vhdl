@@ -44,7 +44,9 @@ begin
         if rst = '1' then
             output <= "00000000";
         
-        -- This does not currently work and will simply duplicate the data
+        -- Hamming encode if enabled, otherwise output 0's
+        -- Input is of the form [D3 D2 D1 D0]
+        -- Output = P0 P1 P2 P3 | D3 D2 D1 D0
         elsif clk'event and clk = '1' then
             if en = '0' then
                 output <= "00000000";
