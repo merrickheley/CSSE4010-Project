@@ -68,12 +68,22 @@ begin
         elsif clk'event and clk = '1'  then
             if en = '1' then
                 
+                -- Generate syndromes
                 s0 := conv_integer(input(6) xor input(0) xor input(1) xor input(3));
                 s1 := conv_integer(input(5) xor input(0) xor input(2) xor input(3));
                 s2 := conv_integer(input(4) xor input(1) xor input(2) xor input(3));
                 
-                decode_valid <= '1';
+                -- Set decoded output
                 decoded <= input(3 downto 0) xor my_lut(s0*4 + s1*2 + s2)(3 downto 0);
+                
+                -- Check if the decode is valid (detected uncorrectable error)
+                if ((input(0) xor input(1) xor input(2) xor input(3) xor input(4) xor input(5) xor input(6)) = input(7))
+                        and ((s0 + s1 + s2) > 0) then
+                        
+                    decode_valid <= '0';
+                else
+                    decode_valid <= '1';
+                end if;
                 
             else
                 decode_valid <= '0';

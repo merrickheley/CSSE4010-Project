@@ -12,6 +12,8 @@
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -104,23 +106,31 @@ BEGIN
       wait for clk_period*5;
       en <= '1';
       
-      input <= "1111";
+      input <= "0000";
       err <= "00000000";
-
+      
+      for I in 0 to 15 loop 
+          for J in 0 to 7 loop
+             wait for clk_period*2;
+             assert(decoded = input) report "Failed test" severity error;
+             err <= "00000000";
+             err(J) <= '1';
+           end loop;
+          
+          input <= input + '1';
+      end loop;
+      
+      input <= "0100";
+      err <= "10001000";
+      
       wait for clk_period*2;
-      assert(decoded = "1111") report "Failed test 1" severity error;
-    
-      input <= "0001";
-      err <= "00000100";
-
+      assert(decoded = input) report "Failed test" severity error;
+              
+      input <= "0100";
+      err <= "00011000";
+      
       wait for clk_period*2;
-      assert(decoded = "0001") report "Failed test 2" severity error;      
-
-      input <= "0010";
-      err <= "00000010";
-
-      wait for clk_period*2;
-      assert(decoded = "0010") report "Failed test 2" severity error;             
+      assert(decoded = input) report "Failed test" severity error;
 
       wait;
    end process;
