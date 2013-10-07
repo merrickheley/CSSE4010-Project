@@ -373,7 +373,7 @@ Inst_Manchester_Decoder: Manchester_Decoder PORT MAP(
     clk => sampleClock,
     rst => masterReset,
     en => En_Manchester_Decoder,
-    input => Coded_Output,      -- Should be 'Coded_Input'
+    input => Coded_Input,
     decode_valid => En_Hamming_Decoder,
     decoded => Decoded_Manchester
 );
