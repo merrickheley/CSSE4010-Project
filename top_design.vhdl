@@ -16,10 +16,13 @@
 -- Question: Do we have to be able to display source and sink data simultaneously?
 -- Question: Do we have to be able to display the message and send the data simultaneously?
 --
---     Milestone 2: 2013-09-17
+--     Milestone 2: 2013-09-24
 --
 -- Added data source, shell for hamming encoder and decoder, and manchester encoder and 
 -- decoder are tested and working. Todo: Matrix driver, hamming encoder/decoder
+--
+--     Milestone 2 (cont): 2013-10-07
+-- Hamming encoder and decoder completed, tested and working.
 --
 -------------------------------------------------------------------------------
 library IEEE;
