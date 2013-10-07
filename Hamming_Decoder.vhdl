@@ -1,24 +1,19 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
+--
+-- Merrick Heley
+-- 2013-10-07
 -- 
--- Create Date:    09:48:50 09/24/2013 
--- Design Name: 
--- Module Name:    Hamming_Decoder - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -40,10 +35,27 @@ end Hamming_Decoder;
 
 architecture Behavioral of Hamming_Decoder is
 
+    SIGNAL S1 : STD_LOGIC := '0';
+    SIGNAL S2 : STD_LOGIC := '0';
+    SIGNAL S3 : STD_LOGIC := '0';
+    
+    type lut is array (0 to 7) of std_logic_vector(7 downto 0);
+    constant my_lut : lut := (  0 => "10000000",
+                                1 => "00010000",
+                                2 => "00100000",
+                                3 => "00000100",
+                                4 => "01000000",
+                                5 => "00000010",
+                                6 => "00000001",
+                                7 => "00001000");
+
 begin
 
     -- Process for reading data out of the data source when enable is on
     PROCESS (clk, en, rst)
+        variable s0     : integer range 0 to 1;
+        variable s1     : integer range 0 to 1;
+        variable s2     : integer range 0 to 1;    
     BEGIN
         
         -- On reset set the controller back to initial state
@@ -51,14 +63,22 @@ begin
             decoded <= "0000";
             decode_valid <= '0';
         
-        -- This does not currently work and will simply duplicate the data
+        --Hamming Decoder
+        -- Form syndromes 
         elsif clk'event and clk = '1'  then
             if en = '1' then
-                decoded <= input (3 downto 0);
                 decode_valid <= '1';
+                
+                s0 := conv_integer(input(6) xor input(0) xor input(1) xor input(3));
+                s1 := conv_integer(input(5) xor input(0) xor input(2) xor input(3));
+                s2 := conv_integer(input(4) xor input(1) xor input(2) xor input(3));
+
+                decoded <= input(3 downto 0) xor my_lut(s0*4 + s1*2 + s2)(3 downto 0);
+                
             else
-                decoded <= "0000";
                 decode_valid <= '0';
+                decoded <= "0000";
+                
             end if;
         end if;
     END PROCESS;
