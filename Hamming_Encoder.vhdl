@@ -49,7 +49,12 @@ begin
             if en = '0' then
                 output <= "00000000";
             else
-                output <= input & input;  
+                output <=   ((input(0) xor input(1) xor input(2)) &  -- P0 : 0, 1, 2
+                             (input(0) xor input(1) xor input(3)) &  -- P1 : 0, 1, 3
+                             (input(0) xor input(2) xor input(3)) &  -- P2 : 0, 2, 3
+                             (input(1) xor input(2) xor input(3)) &  -- P3 : 1, 2, 3
+                              input
+                             ) xor err;
             end if;      
         end if;
     END PROCESS;
