@@ -31,6 +31,7 @@ entity Matrix_Driver is
            en : in  STD_LOGIC_VECTOR (1 downto 0);
            data_source : in  STD_LOGIC_VECTOR (3 downto 0);
            data_sink : in  STD_LOGIC_VECTOR (3 downto 0);
+           data_sink_err : in STD_LOGIC_VECTOR (7 downto 0);
            led_matrix : out  STD_LOGIC_VECTOR (14 downto 0);
            row_select : out  STD_LOGIC_VECTOR (2 downto 0));
 end Matrix_Driver;
@@ -55,12 +56,14 @@ signal matrix_numbers : matrix_numbers_type := (("0110", "0000", "0110", "1001",
                                                 ("1110", "0000", "1110", "0001", "0001", "0001", "0001", "0001"),   -- C
                                                 ("0011", "0000", "0011", "0101", "1001", "1001", "1001", "0101"), 	-- D
                                                 ("1111", "0000", "1111", "0001", "0001", "1111", "0001", "0001"),   -- E
-                                                ("1111", "0000", "0001", "0001", "0001", "1111", "0001", "0001")	-- F       
+                                                ("0111", "0000", "0001", "0001", "0001", "0111", "0001", "0001")	-- F       
                                                 );
                        
 signal digit1 : std_logic_vector(3 downto 0) := "0000";
 signal digit2 : std_logic_vector(3 downto 0) := "0000";
 signal digit3 : std_logic_vector(3 downto 0) := "0000";
+
+signal digit2_err : std_logic_vector(7 downto 0) := "00000000";
 
 signal input : std_logic_vector(3 downto 0) := "0000";
 
@@ -98,10 +101,11 @@ begin
             elsif en = "10" then
             
                 digit2 <= data_sink;
-                row <= row + '1';               
+                digit2_err <= data_sink_err(0) & '0' & data_sink_err(6 downto 1);
+                row <= row + '1';
                 
                 led_matrix <= not('0' & matrix_numbers(digit1_var)(row_var) &
-                                  '0' & matrix_numbers(digit2_var)(row_var) &
+                                  digit2_err(row_var) & matrix_numbers(digit2_var)(row_var) &
                                   '0' & matrix_numbers(digit3_var)(row_var));          
                 
             -- Print nothing, either not enable or both enabled

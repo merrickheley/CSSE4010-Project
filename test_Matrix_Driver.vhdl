@@ -46,7 +46,8 @@ ARCHITECTURE behavior OF test_Matrix_Driver IS
          en : IN  std_logic_vector(1 downto 0);
          data_source : IN  std_logic_vector(3 downto 0);
          data_sink : IN  std_logic_vector(3 downto 0);
-         led_matrix : OUT  std_logic_vector(15 downto 0);
+         data_sink_err : IN std_logic_vector(7 downto 0);
+         led_matrix : OUT  std_logic_vector(14 downto 0);
          row_select : OUT  std_logic_vector(2 downto 0)
         );
     END COMPONENT;
@@ -58,9 +59,10 @@ ARCHITECTURE behavior OF test_Matrix_Driver IS
    signal en : std_logic_vector(1 downto 0) := (others => '0');
    signal data_source : std_logic_vector(3 downto 0) := (others => '0');
    signal data_sink : std_logic_vector(3 downto 0) := (others => '0');
-
+   signal data_sink_err : std_logic_vector(7 downto 0) := (others => '0'); 
+    
  	--Outputs
-   signal led_matrix : std_logic_vector(15 downto 0);
+   signal led_matrix : std_logic_vector(14 downto 0);
    signal row_select : std_logic_vector(2 downto 0);
 
    -- Clock period definitions
@@ -75,6 +77,7 @@ BEGIN
           en => en,
           data_source => data_source,
           data_sink => data_sink,
+          data_sink_err => data_sink_err,
           led_matrix => led_matrix,
           row_select => row_select
         );

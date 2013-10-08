@@ -40,7 +40,7 @@ architecture Behavioral of Hamming_Decoder is
     SIGNAL S3 : STD_LOGIC := '0';
     
     type lut is array (0 to 7) of std_logic_vector(7 downto 0);
-    constant my_lut : lut := (  0 => "10000000",
+    constant my_lut : lut := (  0 => "00000000",
                                 1 => "00010000",
                                 2 => "00100000",
                                 3 => "00000100",

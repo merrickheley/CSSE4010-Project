@@ -134,8 +134,10 @@ component Data_Sink port (
            rst   :            in  std_logic;
            en    :            in  std_logic;
            input :            in  std_logic_vector(3 downto 0);
-           read_ram :         in STD_LOGIC_VECTOR (5 downto 0);
-           out1  :            out std_logic_vector(3 downto 0)
+           input_err :        in  std_logic_vector(7 downto 0);
+           read_ram :         in  STD_LOGIC_VECTOR (5 downto 0);
+           out1  :            out std_logic_vector(3 downto 0);
+           out2  :            out std_logic_vector(7 downto 0)
 ); end component;
 
 -- Component for Transmitter controller
@@ -191,7 +193,8 @@ COMPONENT Matrix_Driver PORT(
     rst : IN std_logic;
     en : IN std_logic_vector(1 downto 0);
     data_source : IN std_logic_vector(3 downto 0);
-    data_sink : IN std_logic_vector(3 downto 0);          
+    data_sink : IN std_logic_vector(3 downto 0);
+    data_sink_err : IN std_logic_vector(7 downto 0);
     led_matrix : OUT std_logic_vector(14 downto 0);
     row_select : OUT std_logic_vector(2 downto 0)
     );
@@ -246,6 +249,8 @@ signal Raw_Sink           : std_logic_vector(3 downto 0);          -- Decoded ha
 signal En_Sink            : std_logic;                      -- Enable the data sink
 signal Matrix_Sink        : std_logic_vector(3 downto 0);   -- Output for the matrix display
 signal Read_Ram           : std_logic_vector(5 downto 0);   -- Read a value out of the sink ram
+signal Read_Err           : std_logic_vector(7 downto 0);   -- Error output by the hamming decoder
+signal Matrix_Err         : std_logic_vector(7 downto 0);   -- Error input for matrix encoder
 
 ----------------------------------
 -- User interface signals 
@@ -394,8 +399,10 @@ Inst_Data_Sink: Data_Sink PORT MAP(
     rst => masterReset,
     en => En_Sink,
     input => Raw_Sink,
+    input_err => Decoded_Manchester,
     read_ram => Read_Ram,
-    out1 => digit1
+    out1 => digit1,
+    out2 => Matrix_Err
 );
 
 Inst_Receiver_Controller: Receiver_Controller PORT MAP(
@@ -413,6 +420,7 @@ Inst_Matrix_Driver: Matrix_Driver PORT MAP(
     en => enMatrix,
     data_source => digit4,
     data_sink => digit1,
+    data_sink_err => Matrix_Err,
     led_matrix => led_matrix,
     row_select => row_select
 );
