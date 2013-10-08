@@ -1,22 +1,16 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
+--
+-- Merrick Heley
+-- 2013-09-16 
 -- 
--- Create Date:    10:07:58 09/24/2013 
--- Design Name: 
--- Module Name:    Data_Sink - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
@@ -41,6 +35,9 @@ entity Data_Sink is
            read_ram : in STD_LOGIC_VECTOR (5 downto 0);
            out1 : out  STD_LOGIC_VECTOR (3 downto 0);
            out2 : out  STD_LOGIC_VECTOR (7 downto 0));
+           
+    attribute RAM_STYLE : string;
+    attribute RAM_STYLE of Data_Sink: entity is "BLOCK" ;
 end Data_Sink;
 
 architecture Behavioral of Data_Sink is
@@ -52,6 +49,8 @@ TYPE ERR_TYPE is array (0 to 63) of std_logic_vector (7 downto 0);
 
 signal RAM : RAM_TYPE :=    (others => (others => '0'));
 signal RAM_ERR : ERR_TYPE :=    (others => (others => '0'));
+
+
 
 begin
 

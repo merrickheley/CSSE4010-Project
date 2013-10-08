@@ -1,30 +1,16 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
 --
--- Create Date:   10:20:20 09/24/2013
--- Design Name:   
--- Module Name:   C:/Users/Merrick/Dropbox/UniCourses/CSSE4010/project/test_Data_Sink.vhdl
--- Project Name:  project
--- Target Device:  
--- Tool versions:  
--- Description:   
+-- Merrick Heley
+-- 2013-09-16 
 -- 
--- VHDL Test Bench Created by ISE for module: Data_Sink
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
@@ -45,8 +31,10 @@ ARCHITECTURE behavior OF test_Data_Sink IS
          rst : IN  std_logic;
          en : IN  std_logic;
          input : IN  std_logic_vector(3 downto 0);
+         input_err : IN std_logic_vector(7 downto 0);
          read_ram : IN  std_logic_vector(5 downto 0);
-         out1 : OUT  std_logic_vector(3 downto 0)
+         out1 : OUT  std_logic_vector(3 downto 0);
+         out2 : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
@@ -57,9 +45,10 @@ ARCHITECTURE behavior OF test_Data_Sink IS
    signal en : std_logic := '0';
    signal input : std_logic_vector(3 downto 0) := (others => '0');
    signal read_ram : std_logic_vector(5 downto 0) := (others => '0');
-
+   signal input_err : std_logic_vector(7 downto 0) := (others => '0');
  	--Outputs
    signal out1 : std_logic_vector(3 downto 0);
+   signal out2 : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -72,8 +61,10 @@ BEGIN
           rst => rst,
           en => en,
           input => input,
+          input_err => input_err,
           read_ram => read_ram,
-          out1 => out1
+          out1 => out1,
+          out2 => out2
         );
 
    -- Clock process definitions

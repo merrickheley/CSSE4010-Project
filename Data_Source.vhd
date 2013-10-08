@@ -33,6 +33,9 @@ entity Data_Source is
            out1 : out  STD_LOGIC_VECTOR (3 downto 0);
            out2 : out  STD_LOGIC_VECTOR (3 downto 0)
          );
+         
+    attribute RAM_STYLE : string;
+    attribute RAM_STYLE of Data_Source: entity is "BLOCK" ;
 end Data_Source;
 
 architecture Behavioral of Data_Source is
