@@ -41,7 +41,7 @@ architecture Behavioral of Data_Source is
 signal index : std_logic_vector(5 downto 0) := "000000";
 
 TYPE RAM_TYPE is array (0 to 63) of std_logic_vector (3 downto 0);
-signal RAM : RAM_TYPE :=    (   "0000",
+constant RAM : RAM_TYPE :=  (   "0000",
                                 "0001",
                                 "0010",
                                 "0011",
@@ -105,6 +105,9 @@ signal RAM : RAM_TYPE :=    (   "0000",
                                 "1101",
                                 "0000",
                                 "0010");
+                                
+--attribute ram_style of RAM : signal is "MRAM";
+
 begin
     
     -- Process for reading data out of the data source when enable is on
