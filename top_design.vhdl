@@ -11,18 +11,23 @@
 --
 -- Updates:
 --
---     Milestone 1: 2013-09-17
+--     Milestone 1: 2013-09-17 (v0.2)
 --
 -- Question: Do we have to be able to display source and sink data simultaneously?
 -- Question: Do we have to be able to display the message and send the data simultaneously?
 --
---     Milestone 2: 2013-09-24
+--     Milestone 2: 2013-09-24 
 --
 -- Added data source, shell for hamming encoder and decoder, and manchester encoder and 
 -- decoder are tested and working. Todo: Matrix driver, hamming encoder/decoder
 --
---     Milestone 2 (cont): 2013-10-07
+--     Milestone 2 (cont): 2013-10-07 (v0.3)
 -- Hamming encoder and decoder completed, tested and working.
+--
+--
+--    Draft Version: 2013-10-14 (v0.4)
+-- Adding playback from data source
+-- Fixing data sink's ability to display messages with error.
 --
 -------------------------------------------------------------------------------
 library IEEE;
@@ -394,6 +399,8 @@ Inst_Hamming_Decoder: Hamming_Decoder PORT MAP(
     decoded => Raw_Sink
 );
 
+-- Instance for the data sink.
+-- Store the values sent by the manchester encoder in a circular buffer
 Inst_Data_Sink: Data_Sink PORT MAP(
     clk => sampleClock,
     rst => masterReset,
@@ -405,6 +412,8 @@ Inst_Data_Sink: Data_Sink PORT MAP(
     out2 => Matrix_Err
 );
 
+-- Instance of reciever controller
+-- Enables the manchester decoder (always on), and controls data sink display line.
 Inst_Receiver_Controller: Receiver_Controller PORT MAP(
     clk => secClock,
     rst => masterReset,
@@ -413,6 +422,8 @@ Inst_Receiver_Controller: Receiver_Controller PORT MAP(
     start_display => Disp_Sink
 );
 
+-- Instance of the matrix driver
+-- Used to play back the 
 enMatrix <= "10";
 Inst_Matrix_Driver: Matrix_Driver PORT MAP(
     clk => fastClock,
@@ -430,22 +441,26 @@ digit2 <= "0000";
 digit3 <= "0000";
 digit4 <= "0000";
 
+-- Map the input (slideswitches and pushbuttons)
 Hamming_Error <= slideSwitches;
 masterReset   <= pushButtons(3);
 Disp_Sink     <= pushButtons(2);
 Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
+-- Map the LED's
 LEDs(7) <= En_Source;
 LEDs(6) <= slowClock;
 LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
 
+-- Map the logic_analyzer port (excluding the last pin)
 logic_analyzer(6 downto 1) <= "000000";
 logic_analyzer(0) <= Coded_Output;
---logic_analyzer <= Decoded_Manchester;
 
+-- Map the final pin of the logic analyzer port to be an input
+-- Receives a manchester encoded message
 Coded_Input <= encoded_input;
 		 
 end Behavioral;
