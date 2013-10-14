@@ -26,10 +26,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Matrix_Driver is
     Port ( clk : in  STD_LOGIC;
---           slowClk : in STD_LOGIC;
            rst : in  STD_LOGIC;
-           en : in  STD_LOGIC_VECTOR (1 downto 0);
+           en : in  STD_LOGIC;
            data_source : in  STD_LOGIC_VECTOR (3 downto 0);
+           data_source_err : in STD_LOGIC_VECTOR (7 downto 0);
            data_sink : in  STD_LOGIC_VECTOR (3 downto 0);
            data_sink_err : in STD_LOGIC_VECTOR (7 downto 0);
            led_matrix : out  STD_LOGIC_VECTOR (14 downto 0);
@@ -63,6 +63,7 @@ signal digit1 : std_logic_vector(3 downto 0) := "0000";
 signal digit2 : std_logic_vector(3 downto 0) := "0000";
 signal digit3 : std_logic_vector(3 downto 0) := "0000";
 
+signal digit1_err : std_logic_vector(7 downto 0) := "00000000";
 signal digit2_err : std_logic_vector(7 downto 0) := "00000000";
 
 signal input : std_logic_vector(3 downto 0) := "0000";
@@ -93,20 +94,23 @@ begin
             digit3_var := conv_integer(digit3);
         
             -- Enable the data source printing
-            if    en = "01" then
+            if    en = '0' then
                 row <= "000";
                 led_matrix <= "000000000000000";
             
-            -- Enable the data sink printing
-            elsif en = "10" then
+            -- Enable the data display
+            elsif en = '1' then
+            
+                digit1 <= data_source;
+                digit1_err <= data_source_err(0) & '0' & data_source_err(6 downto 1);
             
                 digit2 <= data_sink;
                 digit2_err <= data_sink_err(0) & '0' & data_sink_err(6 downto 1);
                 row <= row + '1';
                 
-                led_matrix <= not('0' & matrix_numbers(digit1_var)(row_var) &
+                led_matrix <= not(digit1_err(row_var) & matrix_numbers(digit1_var)(row_var) &
                                   digit2_err(row_var) & matrix_numbers(digit2_var)(row_var) &
-                                  '0' & matrix_numbers(digit3_var)(row_var));          
+                                  '0' & matrix_numbers(digit3_var)(row_var));
                 
             -- Print nothing, either not enable or both enabled
             else
@@ -116,8 +120,6 @@ begin
             end if;
         end if;
     END PROCESS;
-    
-    
     
     row_select <= row;
 

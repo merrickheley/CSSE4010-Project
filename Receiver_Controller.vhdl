@@ -1,36 +1,21 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
+-------------------------------------------------------------------------------
+-- CSSE4010 Project
+-- Simple Communication System
+--
+-- Merrick Heley
+-- 2013-09-16
 -- 
--- Create Date:    10:45:43 09/24/2013 
--- Design Name: 
--- Module Name:    Receiver_Controller - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
+-- This system implements a communication system between two Nexus 2 FPGA 
+-- boards, that sends a 64 character message from one system to the other 
+-- using a hamming and manchester coded message.
 --
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.Numeric_Std.all;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity Receiver_Controller is
     Port ( clk : in  STD_LOGIC;

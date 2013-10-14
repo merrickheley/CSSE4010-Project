@@ -69,9 +69,10 @@ component ssegDriver port (
 -- and out2
 COMPONENT Data_Source
 PORT(
-    clk :  IN  std_logic;
-    rst :  IN  std_logic;
-    en :   IN  std_logic;          
+    clk  : IN  std_logic;
+    rst  : IN  std_logic;
+    en   : IN  std_logic;
+    sel  : IN  std_logic_vector(5 downto 0);
     out1 : OUT std_logic_vector(3 downto 0);
     out2 : OUT std_logic_vector(3 downto 0)
     );
@@ -96,11 +97,11 @@ end component;
 -- the clock for the input signal.
 COMPONENT Manchester_Encoder
 PORT(
-    clk : IN std_logic;
-    rst : IN std_logic;
-    en : IN std_logic;
-    input : IN std_logic_vector(7 downto 0);          
-    outSig : OUT std_logic
+    clk :       IN std_logic;
+    rst :       IN std_logic;
+    en :        IN std_logic;
+    input :     IN std_logic_vector(7 downto 0);          
+    outSig :    OUT std_logic
     );
 END COMPONENT;
 
@@ -190,18 +191,16 @@ component Receiver_Controller port (
 -- Matrix Driver
 ----------------------------------
 -- Display digits to the LED matrix
--- en 00/11 : do nothing
--- en 01    : data source input
--- en 10    : data sink input
 COMPONENT Matrix_Driver PORT(
-    clk : IN std_logic;
-    rst : IN std_logic;
-    en : IN std_logic_vector(1 downto 0);
-    data_source : IN std_logic_vector(3 downto 0);
-    data_sink : IN std_logic_vector(3 downto 0);
-    data_sink_err : IN std_logic_vector(7 downto 0);
-    led_matrix : OUT std_logic_vector(14 downto 0);
-    row_select : OUT std_logic_vector(2 downto 0)
+    clk :             IN  std_logic;
+    rst :             IN  std_logic;
+    en :              IN  std_logic;
+    data_source :     IN  std_logic_vector(3 downto 0);
+    data_source_err : IN  std_logic_vector(7 downto 0);
+    data_sink :       IN  std_logic_vector(3 downto 0);
+    data_sink_err :   IN  std_logic_vector(7 downto 0);
+    led_matrix :      OUT std_logic_vector(14 downto 0);
+    row_select :      OUT std_logic_vector(2 downto 0)
     );
 END COMPONENT;
 
@@ -222,6 +221,8 @@ signal secClock     : std_logic;                            -- Generates a pulse
 signal En_Source     : std_logic;                           -- Enable signal for data source
 signal Raw_Source    : std_logic_vector(3 downto 0);        -- Raw source output for hamming
 signal Matrix_Source : std_logic_vector(3 downto 0);        -- Source output for matrix
+signal Read_Source   : std_logic_vector(5 downto 0);        -- Read a value out of the source ram
+signal Source_Err    : std_logic_vector(7 downto 0);        -- Error input for matrix encoder
 
 ----------------------------------
 -- Hamming encoder signals
@@ -256,6 +257,7 @@ signal Matrix_Sink        : std_logic_vector(3 downto 0);   -- Output for the ma
 signal Read_Ram           : std_logic_vector(5 downto 0);   -- Read a value out of the sink ram
 signal Read_Err           : std_logic_vector(7 downto 0);   -- Error output by the hamming decoder
 signal Matrix_Err         : std_logic_vector(7 downto 0);   -- Error input for matrix encoder
+signal En_Hamming_Display : std_logic;                      -- Enable the hamming display
 
 ----------------------------------
 -- User interface signals 
@@ -264,6 +266,9 @@ signal Transmit           : std_logic;                      -- Begin transmissio
 signal Hamming_Error      : std_logic_vector(7 downto 0);   -- Error to be introduced on hamming encoder
 signal Disp_Source        : std_logic;                      -- Begin displaying the source
 signal Disp_Sink          : std_logic;                      -- Begin displaying the sink
+signal En_Matrix          : std_logic;                      -- Enable the matrix display
+signal No_Err             : std_logic_vector(7 downto 0);   -- No error (filled with 0's)
+
 
 ----------------------------------
 -- 7seg digit inputs
@@ -273,13 +278,6 @@ signal digit1 : std_logic_vector(3 downto 0);
 signal digit2 : std_logic_vector(3 downto 0);
 signal digit3 : std_logic_vector(3 downto 0);
 signal digit4 : std_logic_vector(3 downto 0);
-
-----------------------------------
--- Test enable
--- This is test code and can be removed
-----------------------------------
-signal enMatrix : std_logic_vector(1 downto 0);
-
 
 begin
 
@@ -352,6 +350,7 @@ Inst_Data_Source: Data_Source PORT MAP(
     clk => slowClock,
     rst => masterReset,
     en => En_Source,
+    sel => Read_Source,
     out1 => Raw_Source,
     out2 => Matrix_Source
 );
@@ -424,22 +423,46 @@ Inst_Receiver_Controller: Receiver_Controller PORT MAP(
 
 -- Instance of the matrix driver
 -- Used to play back the 
-enMatrix <= "10";
+En_Matrix <= '1';
 Inst_Matrix_Driver: Matrix_Driver PORT MAP(
     clk => fastClock,
     rst => masterReset,
-    en => enMatrix,
+    en => En_Matrix,
     data_source => digit4,
+    data_source_err => Source_Err,
     data_sink => digit1,
     data_sink_err => Matrix_Err,
     led_matrix => led_matrix,
     row_select => row_select
 );
 
+-- Instance of the receiver controller
+-- Since this plays back the data sink, we can use another instance to play back the data source
+Inst_Source_Playback_Controller: Receiver_Controller PORT MAP(
+    clk => secClock,
+    rst => masterReset,
+    en_dec => En_Hamming_Display,
+    display => Read_Source,
+    start_display => Disp_Source
+);
+
+-- Instance of the hamming controller
+-- This is for displaying the data to the LED matrix
+No_Err <= "00000000";
+Inst_Display_Hamming_Encoder: Hamming_Encoder PORT MAP(
+    clk => sampleClock,
+    rst => masterReset,
+    en => En_Hamming_Display,
+    input => Matrix_Source,
+    err => No_Err,
+    output => Source_Err
+);
+
+
 -- Instance for the user interface
 digit2 <= "0000";
 digit3 <= "0000";
-digit4 <= "0000";
+digit4 <= Matrix_Source;
 
 -- Map the input (slideswitches and pushbuttons)
 Hamming_Error <= slideSwitches;
@@ -449,11 +472,12 @@ Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
 -- Map the LED's
-LEDs(7) <= En_Source;
+LEDs(7) <= En_Hamming_Display;
 LEDs(6) <= slowClock;
 LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
+--LEDs <= Source_Err;
 
 -- Map the logic_analyzer port (excluding the last pin)
 logic_analyzer(6 downto 1) <= "000000";

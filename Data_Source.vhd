@@ -27,9 +27,10 @@ use IEEE.Numeric_Std.all;
 --use UNISIM.VComponents.all;
 
 entity Data_Source is
-    Port ( clk :  in   STD_LOGIC;
-           rst :  in   STD_LOGIC;
-           en :   in   STD_LOGIC;
+    Port ( clk  : in   STD_LOGIC;
+           rst  : in   STD_LOGIC;
+           en   : in   STD_LOGIC;
+           sel  : in   STD_LOGIC_VECTOR (5 downto 0);
            out1 : out  STD_LOGIC_VECTOR (3 downto 0);
            out2 : out  STD_LOGIC_VECTOR (3 downto 0)
          );
@@ -125,6 +126,8 @@ begin
             out1 <= RAM(input_var);
             index <= index + '1';
         end if;
+        
+        out2 <= RAM(conv_integer(sel));
 
     END PROCESS;
     
