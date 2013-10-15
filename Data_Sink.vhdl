@@ -44,17 +44,37 @@ end Data_Sink;
 
 architecture Behavioral of Data_Sink is
 
-signal index : STD_LOGIC_VECTOR(5 downto 0) := "000000";
+	COMPONENT Block_Ram
+	PORT(
+		clk      : IN  std_logic;
+		we       : IN  std_logic;
+        rd_addr  : IN  std_logic_vector;
+        wr_addr  : IN  std_logic_vector;
+		datain   : IN  std_logic_vector;          
+		dataout  : OUT std_logic_vector
+		);
+	END COMPONENT;
 
-TYPE RAM_TYPE is array (0 to 63) of std_logic_vector (3 downto 0);
-TYPE ERR_TYPE is array (0 to 63) of std_logic_vector (7 downto 0);
-TYPE VAL_TYPE is array (0 to 63) of std_logic;
+    signal index : STD_LOGIC_VECTOR(5 downto 0) := "000000";
 
-signal RAM : RAM_TYPE :=    (others => (others => '0'));
-signal RAM_ERR : ERR_TYPE :=    (others => (others => '0'));
-signal VAL : VAL_TYPE := (others => '0');
+--    TYPE RAM_TYPE is array (0 to 63) of std_logic_vector (3 downto 0);
+    TYPE ERR_TYPE is array (0 to 63) of std_logic_vector (7 downto 0);
+    TYPE VAL_TYPE is array (0 to 63) of std_logic;
+
+--    signal RAM : RAM_TYPE :=    (others => (others => '0'));
+    signal RAM_ERR : ERR_TYPE :=    (others => (others => '0'));
+    signal VAL : VAL_TYPE := (others => '0');
 
 begin
+
+	Inst_Block_Ram: Block_Ram PORT MAP(
+		clk => clk,
+		we => en,
+		rd_addr => read_ram,
+        wr_addr => index,
+		datain => input,
+		dataout => out1
+	);
 
     -- Process for writing data to the sink when enable is on
     PROCESS (clk, en, rst)
@@ -62,19 +82,19 @@ begin
         
         if (rst = '1') then
             index <= "000000";
-            RAM <= (others => (others => '0'));
+--            RAM <= (others => (others => '0'));
             RAM_ERR <= (others => (others => '0'));
             VAL <= (others => '0');
             
         elsif clk'event and clk = '1' then
             if en = '1' then
-                RAM(conv_integer(index)) <= input;
+--                RAM(conv_integer(index)) <= input;
                 RAM_ERR(conv_integer(index)) <= input_err;
                 VAL(conv_integer(index)) <= input_val;
                 index <= index + '1';
             end if;
             
-            out1 <= RAM(conv_integer(read_ram));
+--            out1 <= RAM(conv_integer(read_ram));
             out2 <= RAM_ERR(conv_integer(read_ram));
             out3 <= VAL(conv_integer(read_ram));
             

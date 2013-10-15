@@ -482,12 +482,11 @@ Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
 -- Map the LED's
---LEDs(7) <= En_Sink;
---LEDs(6) <= slowClock;
---LEDs(5) <= En_Hamming_Decoder;
---LEDS(4 downto 1) <= Raw_Source;
---LEDs(0) <= Coded_Output;
-LEDs <= Matrix_Err;
+LEDs(7) <= En_Sink;
+LEDs(6) <= slowClock;
+LEDs(5) <= En_Hamming_Decoder;
+LEDS(4 downto 1) <= Raw_Source;
+LEDs(0) <= Coded_Output;
 
 -- Map the logic_analyzer port (excluding the last pin)
 logic_analyzer(6 downto 1) <= "000000";
