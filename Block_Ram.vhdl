@@ -37,6 +37,7 @@ begin
     BEGIN
         -- This block memory has a seperate read and write address
         -- I.e. it is a _dual port_ RAM
+        -- If enabled allow writing, always allow retrieval of the data
         if clk'event and clk = '1' then
             if we = '1' then
                 ram(to_integer(unsigned(wr_addr))) <= datain;

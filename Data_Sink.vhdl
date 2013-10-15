@@ -17,15 +17,6 @@ use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.Numeric_Std.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity Data_Sink is
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
@@ -62,6 +53,7 @@ architecture Behavioral of Data_Sink is
 
 begin
 
+    -- Use block ram to store/retrieve data
 	Inst_Block_Ram: Block_Ram PORT MAP(
 		clk => clk,
 		we => en,
@@ -79,6 +71,8 @@ begin
             index <= "000000";
             
         elsif clk'event and clk = '1' then
+            -- If enabled, store data in a circular buffer
+            
             if en = '1' then
                 index <= index + '1';
             end if;
@@ -87,6 +81,7 @@ begin
 
     END PROCESS;
     
+    -- Concatenate and split the RAM I/O to enable compressed storage
     ram_input <= input_val & input_err & input;
     out1 <= ram_output(3 downto 0);
     out2 <= ram_output(11 downto 4);

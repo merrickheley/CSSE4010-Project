@@ -42,6 +42,8 @@ begin
             count <= "000000";
         elsif clk'event and clk = '1' then
             CASE y IS
+                -- No display
+                -- When start_display is received, move to display state
                 WHEN A =>
                     if start_display = '1' then
                         count <= "000000";
@@ -49,6 +51,7 @@ begin
                     else
                         y <= A;
                     end if;
+                -- Display each value once, reset afterwards
                 WHEN B =>
                     if count = "111111" then
                         y <= A;

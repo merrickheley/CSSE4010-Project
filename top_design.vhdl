@@ -12,9 +12,8 @@
 -- Updates:
 --
 --     Milestone 1: 2013-09-17 (v0.2)
---
--- Question: Do we have to be able to display source and sink data simultaneously?
--- Question: Do we have to be able to display the message and send the data simultaneously?
+-- Adds manchester encoder/decoder, data source, data sink. Discovers clock rate.
+-- Tested and working.
 --
 --     Milestone 2: 2013-09-24 
 --
@@ -24,10 +23,9 @@
 --     Milestone 2 (cont): 2013-10-07 (v0.3)
 -- Hamming encoder and decoder completed, tested and working.
 --
---
 --    Draft Version: 2013-10-14 (v0.4)
 -- Adding playback from data source
--- Fixing data sink's ability to display messages with error.
+-- Fixing data sink's ability to display messages with error (uses smiley faces)
 --
 -------------------------------------------------------------------------------
 library IEEE;
@@ -340,6 +338,8 @@ u1 : ssegDriver port map (
 --    transmit => Transmit
 --);
 
+-- Instance for the transmission controller
+-- Handles reading data from the source and enabling the encoders
 Inst_Transmitter_Controller: Transmitter_Controller PORT MAP(
     clk => slowClock,
     rst => masterReset,
@@ -489,6 +489,7 @@ LEDS(4 downto 1) <= Raw_Source;
 LEDs(0) <= Coded_Output;
 
 -- Map the logic_analyzer port (excluding the last pin)
+-- Last pin maps to input
 logic_analyzer(6 downto 1) <= "000000";
 logic_analyzer(0) <= Coded_Output;
 

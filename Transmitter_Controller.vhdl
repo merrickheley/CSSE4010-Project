@@ -52,14 +52,17 @@ begin
             count <= "000000";
         elsif clk'event and clk = '1' then
             CASE y IS
+                -- Not transmitting
                 WHEN A =>
                     if st_Transmit = '1' then
                         y <= B;
                     else
                         y <= A;
                     end if;
+                -- Delay. This allows for the start byte to be sent
                 WHEN B =>
                     y <= C;
+                -- Begin transmission
                 WHEN C =>
                     if count = "111111" then
                         count <= "000000";
@@ -68,6 +71,7 @@ begin
                         count <= count + '1';
                         y <= C;
                     end if;
+                -- Delay for one byte to allow send to finish
                 WHEN D =>
                     y <= A;
             END CASE;
@@ -76,7 +80,7 @@ begin
     END PROCESS;
          
     en_Data <= '1' WHEN y = C ELSE '0';    
-    en_Enc <= '1' WHEN y = C ELSE '0';
+    en_Enc  <= '1' WHEN y = C ELSE '0';
     en_Enc2 <= '1' WHEN y = C ELSE '0';
 
 end Behavioral;

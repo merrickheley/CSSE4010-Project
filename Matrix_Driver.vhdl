@@ -10,19 +10,11 @@
 -- using a hamming and manchester coded message.
 --
 -------------------------------------------------------------------------------
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity Matrix_Driver is
     Port ( clk : in  STD_LOGIC;
@@ -65,7 +57,6 @@ type matrix_errs_type is array (0 to 1) of matrix_err_type;
 
 signal error_numbers : matrix_errs_type :=    (("00000", "00000", "00000", "01110", "10001", "00000", "01010", "01010"),    -- :)
                                                ("00000", "00000", "00000", "10001", "01110", "00000", "01010", "01010"));   -- :(
---                                               ("01110", "00000", "00100", "00000", "00100", "00100", "01000", "10001"));   -- ?
 
                        
 signal digit1 : std_logic_vector(3 downto 0) := "0000";
@@ -108,7 +99,8 @@ begin
                 led_matrix <= "000000000000000";
             
             -- Enable the data display
-            elsif en = '1' then
+            -- Combine the digits with their error, and display 2-bit error with :) or :(
+            else
             
                 digit1 <= data_source;
                 digit1_err <= data_source_err(0) & '0' & data_source_err(6 downto 1);
@@ -122,12 +114,7 @@ begin
                 led_matrix <= not(digit1_err(row_var) & matrix_numbers(digit1_var)(row_var) &
                                   digit2_err(row_var) & matrix_numbers(digit2_var)(row_var) &
                                   error_numbers(digit3_var)(row_var));
-                
-            -- Print nothing, either not enable or both enabled
-            else
-                row <= "000";
-                led_matrix <= "000000000000000";
-                
+
             end if;
         end if;
     END PROCESS;
