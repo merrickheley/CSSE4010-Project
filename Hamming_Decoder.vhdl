@@ -29,7 +29,8 @@ entity Hamming_Decoder is
            rst : in  STD_LOGIC;
            en : in  STD_LOGIC;
            input : in  STD_LOGIC_VECTOR (7 downto 0);
-           decode_valid : out STD_LOGIC;
+           receive : out STD_LOGIC;
+           decode_invalid : out STD_LOGIC;
            decoded : out  STD_LOGIC_VECTOR (3 downto 0));
 end Hamming_Decoder;
 
@@ -61,7 +62,8 @@ begin
         -- On reset set the controller back to initial state
         if rst = '1' then
             decoded <= "0000";
-            decode_valid <= '0';
+            decode_invalid <= '0';
+            receive <= '0';
         
         --Hamming Decoder
         -- Form syndromes 
@@ -76,17 +78,20 @@ begin
                 -- Set decoded output
                 decoded <= input(3 downto 0) xor my_lut(s0*4 + s1*2 + s2)(3 downto 0);
                 
-                -- Check if the decode is valid (detected uncorrectable error)
+                -- Check if the decode is invalid (detected uncorrectable error)
                 if ((input(0) xor input(1) xor input(2) xor input(3) xor input(4) xor input(5) xor input(6)) = input(7))
                         and ((s0 + s1 + s2) > 0) then
                         
-                    decode_valid <= '0';
+                    decode_invalid <= '1';
                 else
-                    decode_valid <= '1';
+                    decode_invalid <= '0';
                 end if;
                 
+                receive <= '1';
+                
             else
-                decode_valid <= '0';
+                receive <= '0';
+                decode_invalid <= '0';
                 decoded <= "0000";
                 
             end if;

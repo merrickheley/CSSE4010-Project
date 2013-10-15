@@ -32,6 +32,7 @@ entity Matrix_Driver is
            data_source_err : in STD_LOGIC_VECTOR (7 downto 0);
            data_sink : in  STD_LOGIC_VECTOR (3 downto 0);
            data_sink_err : in STD_LOGIC_VECTOR (7 downto 0);
+           valid_sink : in STD_LOGIC;
            led_matrix : out  STD_LOGIC_VECTOR (14 downto 0);
            row_select : out  STD_LOGIC_VECTOR (2 downto 0));
 end Matrix_Driver;
@@ -56,12 +57,20 @@ signal matrix_numbers : matrix_numbers_type := (("0110", "0000", "0110", "1001",
                                                 ("1110", "0000", "1110", "0001", "0001", "0001", "0001", "0001"),   -- C
                                                 ("0011", "0000", "0011", "0101", "1001", "1001", "1001", "0101"), 	-- D
                                                 ("1111", "0000", "1111", "0001", "0001", "1111", "0001", "0001"),   -- E
-                                                ("0111", "0000", "0001", "0001", "0001", "0111", "0001", "0001")	-- F       
-                                                );
+                                                ("0111", "0000", "0001", "0001", "0001", "0111", "0001", "0001"));	-- F       
+                                                
+                                                
+type matrix_err_type is array(7 downto 0) of std_logic_vector(4 downto 0);                                                
+type matrix_errs_type is array (0 to 1) of matrix_err_type;
+
+signal error_numbers : matrix_errs_type :=    (("00000", "00000", "00000", "01110", "10001", "00000", "01010", "01010"),    -- :)
+                                               ("00000", "00000", "00000", "10001", "01110", "00000", "01010", "01010"));   -- :(
+--                                               ("01110", "00000", "00100", "00000", "00100", "00100", "01000", "10001"));   -- ?
+
                        
 signal digit1 : std_logic_vector(3 downto 0) := "0000";
 signal digit2 : std_logic_vector(3 downto 0) := "0000";
-signal digit3 : std_logic_vector(3 downto 0) := "0000";
+signal digit3 : std_logic := '0';
 
 signal digit1_err : std_logic_vector(7 downto 0) := "00000000";
 signal digit2_err : std_logic_vector(7 downto 0) := "00000000";
@@ -77,7 +86,7 @@ begin
    variable row_var    : integer range 0 to 7;
    variable digit1_var : integer range 0 to 15;
    variable digit2_var : integer range 0 to 15;
-   variable digit3_var : integer range 0 to 15;
+   variable digit3_var : integer range 0 to 1;
    
    BEGIN
         
@@ -108,9 +117,11 @@ begin
                 digit2_err <= data_sink_err(0) & '0' & data_sink_err(6 downto 1);
                 row <= row + '1';
                 
+                digit3 <= valid_sink;
+                
                 led_matrix <= not(digit1_err(row_var) & matrix_numbers(digit1_var)(row_var) &
                                   digit2_err(row_var) & matrix_numbers(digit2_var)(row_var) &
-                                  '0' & matrix_numbers(digit3_var)(row_var));
+                                  error_numbers(digit3_var)(row_var));
                 
             -- Print nothing, either not enable or both enabled
             else

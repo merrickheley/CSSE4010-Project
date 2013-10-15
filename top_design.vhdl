@@ -128,7 +128,8 @@ component Hamming_Decoder port (
         rst     :          in  std_logic;
         en      :          in  std_logic;
         input   :          in  std_logic_vector(7 downto 0);
-        decode_valid :     out std_logic;
+        receive :          out std_logic;
+        decode_invalid :   out std_logic;
         decoded :          out std_logic_vector(3 downto 0)
 ); end component;
 
@@ -141,9 +142,11 @@ component Data_Sink port (
            en    :            in  std_logic;
            input :            in  std_logic_vector(3 downto 0);
            input_err :        in  std_logic_vector(7 downto 0);
+           input_val :        in  std_logic;
            read_ram :         in  STD_LOGIC_VECTOR (5 downto 0);
            out1  :            out std_logic_vector(3 downto 0);
-           out2  :            out std_logic_vector(7 downto 0)
+           out2  :            out std_logic_vector(7 downto 0);
+           out3  :            out std_logic
 ); end component;
 
 -- Component for Transmitter controller
@@ -199,6 +202,7 @@ COMPONENT Matrix_Driver PORT(
     data_source_err : IN  std_logic_vector(7 downto 0);
     data_sink :       IN  std_logic_vector(3 downto 0);
     data_sink_err :   IN  std_logic_vector(7 downto 0);
+    valid_sink :      IN  std_logic;
     led_matrix :      OUT std_logic_vector(14 downto 0);
     row_select :      OUT std_logic_vector(2 downto 0)
     );
@@ -247,7 +251,8 @@ signal Decoded_Manchester    : std_logic_vector(7 downto 0);-- Output decoded ma
 -- Hamming decoder signals
 ----------------------------------
 signal En_Hamming_Decoder : std_logic;                      -- Enable the hamming decoder
-signal Raw_Sink           : std_logic_vector(3 downto 0);          -- Decoded hamming (raw data)
+signal Raw_Sink           : std_logic_vector(3 downto 0);   -- Decoded hamming (raw data)
+signal Decode_Invalid     : std_logic;                      -- Did the decode have double-bit error?
 
 ----------------------------------
 -- Data sink signals
@@ -258,6 +263,7 @@ signal Read_Ram           : std_logic_vector(5 downto 0);   -- Read a value out 
 signal Read_Err           : std_logic_vector(7 downto 0);   -- Error output by the hamming decoder
 signal Matrix_Err         : std_logic_vector(7 downto 0);   -- Error input for matrix encoder
 signal En_Hamming_Display : std_logic;                      -- Enable the hamming display
+signal Invalid_Sink       : std_logic;                      -- Did hamming detect a double-error?
 
 ----------------------------------
 -- User interface signals 
@@ -394,7 +400,8 @@ Inst_Hamming_Decoder: Hamming_Decoder PORT MAP(
     rst => masterReset,
     en => En_Hamming_Decoder,
     input => Decoded_Manchester,
-    decode_valid => En_Sink,
+    receive => En_Sink,
+    decode_invalid => Decode_Invalid,
     decoded => Raw_Sink
 );
 
@@ -406,9 +413,11 @@ Inst_Data_Sink: Data_Sink PORT MAP(
     en => En_Sink,
     input => Raw_Sink,
     input_err => Decoded_Manchester,
+    input_val => Decode_Invalid,
     read_ram => Read_Ram,
     out1 => digit1,
-    out2 => Matrix_Err
+    out2 => Matrix_Err,
+    out3 => Invalid_Sink
 );
 
 -- Instance of reciever controller
@@ -432,6 +441,7 @@ Inst_Matrix_Driver: Matrix_Driver PORT MAP(
     data_source_err => Source_Err,
     data_sink => digit1,
     data_sink_err => Matrix_Err,
+    valid_sink => Invalid_Sink,
     led_matrix => led_matrix,
     row_select => row_select
 );
@@ -472,7 +482,7 @@ Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
 -- Map the LED's
-LEDs(7) <= En_Hamming_Display;
+LEDs(7) <= Invalid_Sink;
 LEDs(6) <= slowClock;
 LEDs(5) <= En_Hamming_Decoder;
 LEDS(4 downto 1) <= Raw_Source;

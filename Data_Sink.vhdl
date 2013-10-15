@@ -32,9 +32,11 @@ entity Data_Sink is
            en : in  STD_LOGIC;
            input : in  STD_LOGIC_VECTOR (3 downto 0);
            input_err : in STD_LOGIC_VECTOR (7 downto 0);
+           input_val : in STD_LOGIC;
            read_ram : in STD_LOGIC_VECTOR (5 downto 0);
            out1 : out  STD_LOGIC_VECTOR (3 downto 0);
-           out2 : out  STD_LOGIC_VECTOR (7 downto 0));
+           out2 : out  STD_LOGIC_VECTOR (7 downto 0);
+           out3 : out  STD_LOGIC);
            
     attribute RAM_STYLE : string;
     attribute RAM_STYLE of Data_Sink: entity is "BLOCK" ;
@@ -46,11 +48,11 @@ signal index : STD_LOGIC_VECTOR(5 downto 0) := "000000";
 
 TYPE RAM_TYPE is array (0 to 63) of std_logic_vector (3 downto 0);
 TYPE ERR_TYPE is array (0 to 63) of std_logic_vector (7 downto 0);
+TYPE VAL_TYPE is array (0 to 63) of std_logic;
 
 signal RAM : RAM_TYPE :=    (others => (others => '0'));
 signal RAM_ERR : ERR_TYPE :=    (others => (others => '0'));
-
-
+signal VAL : VAL_TYPE := (others => '0');
 
 begin
 
@@ -62,16 +64,19 @@ begin
             index <= "000000";
             RAM <= (others => (others => '0'));
             RAM_ERR <= (others => (others => '0'));
+            VAL <= (others => '0');
             
         elsif clk'event and clk = '1' then
             if en = '1' then
                 RAM(conv_integer(index)) <= input;
                 RAM_ERR(conv_integer(index)) <= input_err;
+                VAL(conv_integer(index)) <= input_val;
                 index <= index + '1';
             end if;
             
             out1 <= RAM(conv_integer(read_ram));
             out2 <= RAM_ERR(conv_integer(read_ram));
+            out3 <= VAL(conv_integer(read_ram));
             
         end if;
 
