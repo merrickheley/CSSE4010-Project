@@ -471,7 +471,7 @@ Inst_Display_Hamming_Encoder: Hamming_Encoder PORT MAP(
 
 -- Instance for the user interface
 digit1 <= Matrix_Source;
-digit2 <= Read_Ram(3 downto 0);
+digit2 <= "0000";
 digit3 <= "0000";
 
 -- Map the input (slideswitches and pushbuttons)
