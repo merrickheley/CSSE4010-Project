@@ -57,13 +57,8 @@ architecture Behavioral of Data_Sink is
 
     signal index : STD_LOGIC_VECTOR(5 downto 0) := "000000";
 
---    TYPE RAM_TYPE is array (0 to 63) of std_logic_vector (3 downto 0);
-    TYPE ERR_TYPE is array (0 to 63) of std_logic_vector (7 downto 0);
-    TYPE VAL_TYPE is array (0 to 63) of std_logic;
-
---    signal RAM : RAM_TYPE :=    (others => (others => '0'));
-    signal RAM_ERR : ERR_TYPE :=    (others => (others => '0'));
-    signal VAL : VAL_TYPE := (others => '0');
+    signal ram_input : std_logic_vector(12 downto 0);
+    signal ram_output : std_logic_vector(12 downto 0);
 
 begin
 
@@ -72,8 +67,8 @@ begin
 		we => en,
 		rd_addr => read_ram,
         wr_addr => index,
-		datain => input,
-		dataout => out1
+		datain => ram_input,
+		dataout => ram_output
 	);
 
     -- Process for writing data to the sink when enable is on
@@ -82,25 +77,20 @@ begin
         
         if (rst = '1') then
             index <= "000000";
---            RAM <= (others => (others => '0'));
-            RAM_ERR <= (others => (others => '0'));
-            VAL <= (others => '0');
             
         elsif clk'event and clk = '1' then
             if en = '1' then
---                RAM(conv_integer(index)) <= input;
-                RAM_ERR(conv_integer(index)) <= input_err;
-                VAL(conv_integer(index)) <= input_val;
                 index <= index + '1';
             end if;
-            
---            out1 <= RAM(conv_integer(read_ram));
-            out2 <= RAM_ERR(conv_integer(read_ram));
-            out3 <= VAL(conv_integer(read_ram));
             
         end if;
 
     END PROCESS;
+    
+    ram_input <= input_val & input_err & input;
+    out1 <= ram_output(3 downto 0);
+    out2 <= ram_output(11 downto 4);
+    out3 <= ram_output(12);
 
 end Behavioral;
 

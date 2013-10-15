@@ -27,7 +27,7 @@ end Block_Ram;
 
 architecture Behavioral of Block_Ram is
 
-    type ram_type is array (0 to 63) of std_logic_vector(3 downto 0);
+    type ram_type is array (0 to 63) of std_logic_vector(12 downto 0);
     signal ram : ram_type := (others => (others => '0'));
     signal read_address : std_logic_vector(5 downto 0) := "000000";
 
