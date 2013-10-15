@@ -415,7 +415,7 @@ Inst_Data_Sink: Data_Sink PORT MAP(
     input_err => Decoded_Manchester,
     input_val => Decode_Invalid,
     read_ram => Read_Ram,
-    out1 => digit1,
+    out1 => digit4,
     out2 => Matrix_Err,
     out3 => Invalid_Sink
 );
@@ -437,9 +437,9 @@ Inst_Matrix_Driver: Matrix_Driver PORT MAP(
     clk => fastClock,
     rst => masterReset,
     en => En_Matrix,
-    data_source => digit4,
+    data_source => digit1,
     data_source_err => Source_Err,
-    data_sink => digit1,
+    data_sink => digit4,
     data_sink_err => Matrix_Err,
     valid_sink => Invalid_Sink,
     led_matrix => led_matrix,
@@ -470,9 +470,9 @@ Inst_Display_Hamming_Encoder: Hamming_Encoder PORT MAP(
 
 
 -- Instance for the user interface
-digit2 <= "0000";
+digit1 <= Matrix_Source;
+digit2 <= Read_Ram(3 downto 0);
 digit3 <= "0000";
-digit4 <= Matrix_Source;
 
 -- Map the input (slideswitches and pushbuttons)
 Hamming_Error <= slideSwitches;
@@ -482,12 +482,12 @@ Disp_Source   <= pushButtons(1);
 Transmit      <= pushButtons(0);
 
 -- Map the LED's
-LEDs(7) <= Invalid_Sink;
-LEDs(6) <= slowClock;
-LEDs(5) <= En_Hamming_Decoder;
-LEDS(4 downto 1) <= Raw_Source;
-LEDs(0) <= Coded_Output;
---LEDs <= Source_Err;
+--LEDs(7) <= En_Sink;
+--LEDs(6) <= slowClock;
+--LEDs(5) <= En_Hamming_Decoder;
+--LEDS(4 downto 1) <= Raw_Source;
+--LEDs(0) <= Coded_Output;
+LEDs <= Matrix_Err;
 
 -- Map the logic_analyzer port (excluding the last pin)
 logic_analyzer(6 downto 1) <= "000000";
