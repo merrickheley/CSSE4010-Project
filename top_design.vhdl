@@ -288,9 +288,9 @@ signal digit4 : std_logic_vector(3 downto 0);
 begin
 
 -- Use these for implementation
-slowClock  <= clockScalers(16);
-fastClock  <= clockScalers(12);
-sampleClock <= clockScalers(7);
+slowClock  <= clockScalers(15);
+fastClock  <= clockScalers(11);
+sampleClock <= clockScalers(6);
 
 -- Use these for simulation
 --slowClock <= clockScalers(5);
