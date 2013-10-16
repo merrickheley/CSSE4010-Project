@@ -398,7 +398,7 @@ Inst_Receiver_Controller: Receiver_Controller PORT MAP(
 -- Used to play back the 
 En_Matrix <= '1';
 Inst_Matrix_Driver: Matrix_Driver PORT MAP(
-    clk => fastClock,
+    clk => slowClock,
     rst => masterReset,
     en => En_Matrix,
     data_source => digit1,
