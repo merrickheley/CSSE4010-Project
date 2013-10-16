@@ -13,10 +13,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
 ENTITY test_Hamming_Encoder IS
 END test_Hamming_Encoder;
  
@@ -102,10 +98,10 @@ BEGIN
       err <= "00000000";       
 
       wait for clk_period;
-      assert(output = "11010010" ) report "Failed test 4" severity error;
+      assert(output = "11010010" ) report "Failed test 4" severity error; 
 
-      -- insert stimulus here 
-
+      wait for clk_period*10;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
