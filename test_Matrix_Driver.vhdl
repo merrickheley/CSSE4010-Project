@@ -33,8 +33,7 @@ ARCHITECTURE behavior OF test_Matrix_Driver IS
          led_matrix : OUT  std_logic_vector(14 downto 0);
          row_select : OUT  std_logic_vector(2 downto 0)
         );
-    END COMPONENT;
-    
+    END COMPONENT;    
 
    --Inputs
    signal clk : std_logic := '0';
