@@ -12,11 +12,7 @@
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
+
 ENTITY test_Manchester_Decoder IS
 END test_Manchester_Decoder;
  
@@ -147,6 +143,8 @@ BEGIN
       wait for clk_period*10;
       input <= '1';
       
+      wait for clk_period*10;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
