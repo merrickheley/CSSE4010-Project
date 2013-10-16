@@ -100,14 +100,13 @@ BEGIN
       
       wait for clk50mhz_period*10;
       
+      -- This is held down (i.e. simulation will send the data multiple times with a game between them)
       pushButtons(0) <= '1';
-
-      wait for clk50mhz_period*100;
       
-      -- pushButtons(0) <= '0';
-
-      -- insert stimulus here 
-
+      wait for clk50mhz_period*2000;
+      
+      pushButtons(2) <= '1';
+      
       wait;
    end process;
 
