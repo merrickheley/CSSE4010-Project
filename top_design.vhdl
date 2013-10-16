@@ -286,14 +286,13 @@ signal digit4 : std_logic_vector(3 downto 0);
 begin
 
 -- Use these for implementation
-slowClock  <= clockScalers(15);
-fastClock  <= clockScalers(11);
-sampleClock <= clockScalers(6);
+slowClock  <= clockScalers(13);
+fastClock  <= clockScalers(9);
+sampleClock <= clockScalers(4);
 
 -- Use these for simulation
 --slowClock <= clockScalers(5);
 --fastClock <= clockScalers(1);
-
 
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
