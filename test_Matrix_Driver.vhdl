@@ -3,7 +3,7 @@
 -- Simple Communication System
 --
 -- Merrick Heley
--- 2013-10-08 
+-- 2013-10-08
 -- 
 -- This system implements a communication system between two Nexus 2 FPGA 
 -- boards, that sends a 64 character message from one system to the other 
@@ -12,10 +12,6 @@
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
  
 ENTITY test_Matrix_Driver IS
 END test_Matrix_Driver;
@@ -28,10 +24,12 @@ ARCHITECTURE behavior OF test_Matrix_Driver IS
     PORT(
          clk : IN  std_logic;
          rst : IN  std_logic;
-         en : IN  std_logic_vector(1 downto 0);
+         en : IN  std_logic;
          data_source : IN  std_logic_vector(3 downto 0);
+         data_source_err : IN  std_logic_vector(7 downto 0);
          data_sink : IN  std_logic_vector(3 downto 0);
-         data_sink_err : IN std_logic_vector(7 downto 0);
+         data_sink_err : IN  std_logic_vector(7 downto 0);
+         valid_sink : IN  std_logic;
          led_matrix : OUT  std_logic_vector(14 downto 0);
          row_select : OUT  std_logic_vector(2 downto 0)
         );
@@ -41,11 +39,13 @@ ARCHITECTURE behavior OF test_Matrix_Driver IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
-   signal en : std_logic_vector(1 downto 0) := (others => '0');
+   signal en : std_logic := '0';
    signal data_source : std_logic_vector(3 downto 0) := (others => '0');
+   signal data_source_err : std_logic_vector(7 downto 0) := (others => '0');
    signal data_sink : std_logic_vector(3 downto 0) := (others => '0');
-   signal data_sink_err : std_logic_vector(7 downto 0) := (others => '0'); 
-    
+   signal data_sink_err : std_logic_vector(7 downto 0) := (others => '0');
+   signal valid_sink : std_logic := '0';
+
  	--Outputs
    signal led_matrix : std_logic_vector(14 downto 0);
    signal row_select : std_logic_vector(2 downto 0);
@@ -61,8 +61,10 @@ BEGIN
           rst => rst,
           en => en,
           data_source => data_source,
+          data_source_err => data_source_err,
           data_sink => data_sink,
           data_sink_err => data_sink_err,
+          valid_sink => valid_sink,
           led_matrix => led_matrix,
           row_select => row_select
         );
@@ -74,22 +76,29 @@ BEGIN
 		wait for clk_period/2;
 		clk <= '1';
 		wait for clk_period/2;
-   end process; 
+   end process;
+ 
 
    -- Stimulus process
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
+      wait for 100 ns;
+      
       rst <= '1';
-      en <= "00";
+      en <= '1';
       wait for clk_period*10;
       rst <= '0';
-      en <= "10";
+      
+      data_source <= "0001";
+      data_source_err <= "00010101";
+      data_sink <= "0110";
+      data_sink_err <= "11000010";
+      valid_sink <= '1';
 
-      wait for clk_period*10;
-
-      -- insert stimulus here 
-
+      -- Wait while matrix displays data
+      wait for clk_period*20;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 

@@ -93,7 +93,7 @@ begin
             digit2_var := conv_integer(digit2);
             digit3_var := conv_integer(digit3);
         
-            -- Enable the data source printing
+            -- Do nothing
             if    en = '0' then
                 row <= "000";
                 led_matrix <= "000000000000000";
@@ -111,6 +111,7 @@ begin
                 
                 digit3 <= valid_sink;
                 
+                -- Build the row of the LED matrix to output
                 led_matrix <= not(digit1_err(row_var) & matrix_numbers(digit1_var)(row_var) &
                                   digit2_err(row_var) & matrix_numbers(digit2_var)(row_var) &
                                   error_numbers(digit3_var)(row_var));
