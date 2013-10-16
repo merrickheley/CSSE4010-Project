@@ -99,7 +99,9 @@ BEGIN
       wait for clk_period*16;
         
       en <= '0';
-
+      
+      wait for clk_period*10;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 

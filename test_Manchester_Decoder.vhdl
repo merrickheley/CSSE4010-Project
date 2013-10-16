@@ -105,6 +105,9 @@ BEGIN
           wait for clk_period*10;
           input <= not(dataByte(I));
       end loop;
+            
+      wait for 1ns;
+      assert(decoded = "00000000" ) report "Failed test 1" severity error; 
       
       dataByte <= "01001100";
       -- Send start byte
@@ -116,8 +119,12 @@ BEGIN
       end loop;
       dataByte <= "00000000";
     
+      wait for 1ns;
+      assert(decoded = "10110010" ) report "Failed test 2" severity error; 
         
       wait for clk_period*10;
+      wait for 1ns;
+      assert(decoded = "01001100" ) report "Failed test 3" severity error; 
       input <= '1';
       wait for clk_period*200;
       
@@ -130,6 +137,9 @@ BEGIN
           input <= not(dataByte(I));
       end loop;
       
+      wait for 1ns;
+      assert(decoded = dataByte ) report "Failed test 4" severity error; 
+      
       dataByte <= "00111101";
       -- Send start byte
       for I in 0 to 7 loop
@@ -139,6 +149,9 @@ BEGIN
           input <= not(dataByte(I));
       end loop;
       dataByte <= "00000000";
+      
+      wait for 1ns;
+      assert(decoded = dataByte ) report "Failed test 5" severity error; 
       
       wait for clk_period*10;
       input <= '1';
