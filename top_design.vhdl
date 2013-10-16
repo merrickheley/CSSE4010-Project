@@ -22,6 +22,7 @@
 --
 --     Milestone 2 (cont): 2013-10-07 (v0.3)
 -- Hamming encoder and decoder completed, tested and working.
+-- Matrix driver is tested and working
 --
 --    Draft Version: 2013-10-14 (v0.4)
 -- Adding playback from data source
@@ -172,23 +173,6 @@ component Receiver_Controller port (
 ); end component;
 
 ----------------------------------
--- User Interface
-----------------------------------
--- Handle any hardware output that is essential for the project
---COMPONENT User_Interface
---PORT(
---            clk :            in  STD_LOGIC;
---            rst :            out STD_LOGIC;
---            Matrix_Source :  in  STD_LOGIC_VECTOR (3 downto 0);
---            Matrix_Sink :    in  STD_LOGIC_VECTOR (3 downto 0);
---            slideSwitches :  out STD_LOGIC_VECTOR (7 downto 0);
---            dispSink :       out STD_LOGIC;
---            dispSource :     out STD_LOGIC;
---            transmit :       out STD_LOGIC
---    );
---END COMPONENT;
-
-----------------------------------
 -- Matrix Driver
 ----------------------------------
 -- Display digits to the LED matrix
@@ -290,10 +274,6 @@ slowClock  <= clockScalers(13);
 fastClock  <= clockScalers(9);
 sampleClock <= clockScalers(4);
 
--- Use these for simulation
---slowClock <= clockScalers(5);
---fastClock <= clockScalers(1);
-
 -- Process for 50mhz clock, incremements the clockScalers variable
 process (clk50mhz, masterReset) begin
     if (masterReset = '1') then
@@ -323,19 +303,6 @@ u1 : ssegDriver port map (
       digit3_p => digit3,
       digit4_p => digit4
 );
-
--- Instance for the user interface
--- This handles hardware output that is essential for the project
---Inst_User_Interface: User_Interface PORT MAP(
---    clk => slowClock,
---    rst => masterReset,
---    Matrix_Source => Matrix_Source,
---    Matrix_Sink => Matrix_Sink,
---    slideSwitches => Hamming_Error,
---    dispSource => Disp_Source,
---    dispSink => Disp_Sink,
---    transmit => Transmit
---);
 
 -- Instance for the transmission controller
 -- Handles reading data from the source and enabling the encoders
