@@ -13,10 +13,9 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.Numeric_Std.all; 
  
 ENTITY test_Data_Sink IS
 END test_Data_Sink;
@@ -31,10 +30,12 @@ ARCHITECTURE behavior OF test_Data_Sink IS
          rst : IN  std_logic;
          en : IN  std_logic;
          input : IN  std_logic_vector(3 downto 0);
-         input_err : IN std_logic_vector(7 downto 0);
+         input_err : IN  std_logic_vector(7 downto 0);
+         input_val : IN  std_logic;
          read_ram : IN  std_logic_vector(5 downto 0);
          out1 : OUT  std_logic_vector(3 downto 0);
-         out2 : OUT  std_logic_vector(7 downto 0)
+         out2 : OUT  std_logic_vector(7 downto 0);
+         out3 : OUT  std_logic
         );
     END COMPONENT;
     
@@ -44,11 +45,14 @@ ARCHITECTURE behavior OF test_Data_Sink IS
    signal rst : std_logic := '0';
    signal en : std_logic := '0';
    signal input : std_logic_vector(3 downto 0) := (others => '0');
-   signal read_ram : std_logic_vector(5 downto 0) := (others => '0');
    signal input_err : std_logic_vector(7 downto 0) := (others => '0');
+   signal input_val : std_logic := '0';
+   signal read_ram : std_logic_vector(5 downto 0) := (others => '0');
+
  	--Outputs
    signal out1 : std_logic_vector(3 downto 0);
    signal out2 : std_logic_vector(7 downto 0);
+   signal out3 : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -62,9 +66,11 @@ BEGIN
           en => en,
           input => input,
           input_err => input_err,
+          input_val => input_val,
           read_ram => read_ram,
           out1 => out1,
-          out2 => out2
+          out2 => out2,
+          out3 => out3
         );
 
    -- Clock process definitions
@@ -81,28 +87,46 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;	
-
-      wait for clk_period*10;
-      en <= '1';
+      wait for 100 ns;
+      
+      en <= '0';
+      rst <= '1';
+      
+      -- Test a single write/read
       input <= "0001";
-      wait for clk_period*1;
-      en <= '0';
+      input_err <= "00100100";
+      input_val <= '0';
+
+      wait for clk_period*10;
       
-      wait for clk_period*10;
-      read_ram <= "000000";
-        
-      wait for clk_period*10;
+      rst <= '0';
       en <= '1';
-      input <= "0010";
-      wait for clk_period*1;
+      
+      wait for clk_period;
+      
       en <= '0';
       
+      wait for clk_period;
+      assert(out1 = input)     report "Failed test 1 - input"     severity error;
+      assert(out2 = input_err) report "Failed test 1 - input_err" severity error;
+      assert(out3 = input_val) report "Failed test 1 - input_val" severity error;
+      
+      -- Test a write/read at a later location
+      input <= "0010";
+      input_err <= "00100100";
+      input_val <= '0';
+      
+      en <= '1';
+      wait for clk_period*20;
+      en <= '0';
+      read_ram <= "001111";
+      wait for clk_period;
+      assert(out1 = input)     report "Failed test 2 - input"     severity error;
+      assert(out2 = input_err) report "Failed test 2 - input_err" severity error;
+      assert(out3 = input_val) report "Failed test 2 - input_val" severity error;
+      
       wait for clk_period*10;
-      read_ram <= "000001";
-
-      -- insert stimulus here 
-
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
