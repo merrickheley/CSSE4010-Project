@@ -13,10 +13,6 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
 ENTITY test_Data_Source IS
 END test_Data_Source;
  
@@ -29,6 +25,7 @@ ARCHITECTURE behavior OF test_Data_Source IS
          clk :  IN  std_logic;
          rst :  IN  std_logic;
          en :   IN  std_logic;
+         sel  : in   STD_LOGIC_VECTOR (5 downto 0);
          out1 : OUT  std_logic_vector(3 downto 0);
          out2 : OUT  std_logic_vector(3 downto 0)
         );
@@ -39,6 +36,7 @@ ARCHITECTURE behavior OF test_Data_Source IS
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
    signal en : std_logic := '0';
+   signal sel : std_logic_vector(5 downto 0) := "000000";
 
  	--Outputs
    signal out1 : std_logic_vector(3 downto 0);
@@ -54,6 +52,7 @@ BEGIN
           clk => clk,
           rst => rst,
           en => en,
+          sel => sel,
           out1 => out1,
           out2 => out2
         );
@@ -67,7 +66,6 @@ BEGIN
 		wait for clk_period/2;
    end process;
  
-
    -- Stimulus process
    stim_proc: process
    begin
@@ -80,10 +78,19 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      wait for clk_period*70;
+      -- Play through the data
+      wait for clk_period*30;
+      
+      -- Manually read some data
+      sel <= "000111";
+      
+      -- Continue playing data
+      wait for clk_period*10;
 
-      -- insert stimulus here 
+      assert (out2 = "0111") report "Selection failed" severity error;
 
+      wait for clk_period*10;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
