@@ -32,7 +32,8 @@ ARCHITECTURE behavior OF test_Hamming_Decoder IS
          rst : IN  std_logic;
          en : IN  std_logic;
          input : IN  std_logic_vector(7 downto 0);
-         decode_valid : OUT  std_logic;
+         receive : OUT STD_LOGIC;
+         decode_invalid : OUT STD_LOGIC;
          decoded : OUT  std_logic_vector(3 downto 0)
         );
     END COMPONENT;
@@ -58,8 +59,9 @@ ARCHITECTURE behavior OF test_Hamming_Decoder IS
    signal input : std_logic_vector(3 downto 0) := (others => '0');
    signal err : std_logic_vector(7 downto 0) := (others => '0');
 
- 	--Outputs
-   signal decode_valid : std_logic;
+   --Outputs
+   signal receive : std_logic;
+   signal decode_invalid : std_logic;
    signal decoded : std_logic_vector(3 downto 0);
 
    -- Clock period definitions
@@ -73,7 +75,8 @@ BEGIN
           rst => rst,
           en => en,
           input => hammingencoded,
-          decode_valid => decode_valid,
+          receive => receive,
+          decode_invalid => decode_invalid,
           decoded => decoded
         );
         
@@ -109,10 +112,11 @@ BEGIN
       input <= "0000";
       err <= "00000000";
       
+      -- Test all inputs with a single bit of error in all positions
       for I in 0 to 15 loop 
           for J in 0 to 7 loop
              wait for clk_period*2;
-             assert(decoded = input) report "Failed test" severity error;
+             assert(decoded = input and decode_invalid = '0') report "Failed test" severity error;
              err <= "00000000";
              err(J) <= '1';
            end loop;
@@ -120,18 +124,21 @@ BEGIN
           input <= input + '1';
       end loop;
       
+      -- Test some inputs with double-bit of error, decode should be invalid
       input <= "0100";
       err <= "10001000";
       
       wait for clk_period*2;
-      assert(decoded = input) report "Failed test" severity error;
+      assert(decode_invalid = '1') report "Failed test" severity error;
               
       input <= "0100";
       err <= "00011000";
       
       wait for clk_period*2;
-      assert(decoded = input) report "Failed test" severity error;
+      assert(decode_invalid = '1') report "Failed test" severity error;
 
+      wait for clk_period*10;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
