@@ -155,7 +155,6 @@ component Transmitter_Controller port (
            clk  :            in  std_logic;
            rst  :            in  std_logic;
            st_Transmit :     in  std_logic;
-           st_Disp :         in  std_logic;
            en_Data :         out std_logic;
            en_Enc  :         out std_logic;
            en_Enc2 :         out std_logic
@@ -165,11 +164,11 @@ component Transmitter_Controller port (
 -- The receiver controller will control when data will be logged and when 
 -- to display
 component Receiver_Controller port (
-           clk : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           en_dec : out  STD_LOGIC;
-           display : out  STD_LOGIC_VECTOR(5 downto 0);
-           start_display : in  STD_LOGIC
+           clk :            in   STD_LOGIC;
+           rst :            in   STD_LOGIC;
+           en_dec :         out  STD_LOGIC;
+           display :        out  STD_LOGIC_VECTOR(5 downto 0);
+           start_display :  in   STD_LOGIC
 ); end component;
 
 ----------------------------------
@@ -310,7 +309,6 @@ Inst_Transmitter_Controller: Transmitter_Controller PORT MAP(
     clk => slowClock,
     rst => masterReset,
     st_Transmit => Transmit,
-    st_Disp => Disp_Source,
     en_Data => En_Source,
     en_Enc => En_Hamming_Encoder,
     en_Enc2 => En_Manchester_Encoder

@@ -12,11 +12,7 @@
 -------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
- 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
- 
+
 ENTITY test_Transmitter_Controller IS
 END test_Transmitter_Controller;
  
@@ -29,7 +25,6 @@ ARCHITECTURE behavior OF test_Transmitter_Controller IS
          clk : IN  std_logic;
          rst : IN  std_logic;
          st_Transmit : IN  std_logic;
-         st_Disp : IN  std_logic;
          en_Data : OUT  std_logic;
          en_Enc : OUT  std_logic;
          en_Enc2 : OUT  std_logic
@@ -41,7 +36,6 @@ ARCHITECTURE behavior OF test_Transmitter_Controller IS
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
    signal st_Transmit : std_logic := '0';
-   signal st_Disp : std_logic := '0';
 
  	--Outputs
    signal en_Data : std_logic;
@@ -58,7 +52,6 @@ BEGIN
           clk => clk,
           rst => rst,
           st_Transmit => st_Transmit,
-          st_Disp => st_Disp,
           en_Data => en_Data,
           en_Enc => en_Enc,
           en_Enc2 => en_Enc2
@@ -93,10 +86,8 @@ BEGIN
       
       st_Transmit <= '0';
       
-      wait for clk_period*65;
-
-      -- insert stimulus here 
-
+      wait for clk_period*100;
+      assert false report "------------------ Test completed" severity failure;
       wait;
    end process;
 
